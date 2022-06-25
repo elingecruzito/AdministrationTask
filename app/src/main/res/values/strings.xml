@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AdministrationTask</string>
+
+    <string name="lbl_title_card_progress">Progress</string>
+    <string name="lbl_title_card_complete">Complete</string>
+    <string name="lbl_today">Today</string>
+
+    <string name="lbl_tab_title_progress">Task in progress</string>
+    <string name="lbl_tab_title_complete">Task complet</string>
 </resources>

@@ -13,4 +13,26 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ThemeTitles">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/size_titles</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ThemeSubTitles">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/size_subtitles</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ThemeTitleCard">
+        <item name="android:textColor">@color/blue_background</item>
+        <item name="android:textSize">@dimen/size_titles_card</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ThemeTextInformation">
+        <item name="android:textColor">@color/color_text</item>
+    </style>
 </resources>

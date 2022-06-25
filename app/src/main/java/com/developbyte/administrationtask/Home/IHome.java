@@ -1,5 +1,10 @@
 package com.developbyte.administrationtask.Home;
 
+import com.developbyte.administrationtask.Model.DaysMountModel;
+import com.developbyte.administrationtask.Model.TasksModel;
+
+import java.util.List;
+
 public interface IHome {
     //Comunica de MasterBussinesController a BussinesController
     interface IHomeTransactionHandler{
@@ -17,6 +22,9 @@ public interface IHome {
     //Comunica de BusinessController a ViewController
     interface IHomeRepresentationHandler{
         boolean showHome();
+        void setDaysOfCurrentMount(List<DaysMountModel> daysOfCurrentMount);
+        void setTaskInProgress(List<TasksModel> taskInProgress);
+        void setTaskComplete(List<TasksModel> taskComplete);
     }
 
     //Comunica de Service a BusinessComtroller
@@ -32,6 +40,10 @@ public interface IHome {
         void showListTask();
         void showNewProject();
         void showInfoProject();
+
+        void getDaysOfCurrentMount(int year, int mount);
+        void getTaskInProgress(String date);
+        void getTaskComplete(String date);
         
     }
 }
