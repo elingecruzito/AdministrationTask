@@ -24,6 +24,7 @@ import com.developbyte.administrationtask.Home.Fragments.ProgressFragment;
 import com.developbyte.administrationtask.Model.DaysMountModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +37,7 @@ import java.util.logging.SimpleFormatter;
 public class HomeViewController extends AbstractViewController implements IHome.IHomeRepresentationHandler {
 
     private IHome.IHomeRepresentationDelegate representationDelegate;
-    private Button btnListTask,btnNewProject,btnInfoProject;
+    //private Button btnListTask,btnNewProject,btnInfoProject;
 
     private AppCompatTextView txtDayToday;
     private AppCompatButton btnCalendar;
@@ -51,6 +52,8 @@ public class HomeViewController extends AbstractViewController implements IHome.
 
     private ProgressFragment progressFragment;
     private CompleteFragment completeFragment;
+
+    private FloatingActionButton btnAddTask;
 
     public void setRepresentationDelegate(IHome.IHomeRepresentationDelegate representationDelegate) {
         this.representationDelegate = representationDelegate;
@@ -112,6 +115,14 @@ public class HomeViewController extends AbstractViewController implements IHome.
         });
         tbTask.selectTab(tbTask.getTabAt(0));
         setFragmentTabTask(progressFragment);
+
+        btnAddTask = view.findViewById(R.id.btn_add_task);
+        btnAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                representationDelegate.showNewProject();
+            }
+        });
 
         /*
         btnListTask = view.findViewById(R.id.btnListTask);
