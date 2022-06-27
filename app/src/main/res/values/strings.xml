@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">AdministrationTask</string>
 
+    <string name="btn_cancel">Cancel</string>
+
     <string name="lbl_title_card_progress">Progress</string>
     <string name="lbl_title_card_complete">Complete</string>
     <string name="lbl_today">Today</string>
 
     <string name="lbl_tab_title_progress">Task in progress</string>
     <string name="lbl_tab_title_complete">Task complet</string>
+
+    <string name="lbl_title_new_task">Add New Task</string>
+    <string name="lbl_field_name_task">Task name</string>
+    <string name="lbl_field_date">Task Date</string>
+    <string name="lbl_field_hour">Task Hour</string>
+    <string name="btn_create_task">Create task</string>
 </resources>

@@ -37,7 +37,6 @@ import java.util.logging.SimpleFormatter;
 public class HomeViewController extends AbstractViewController implements IHome.IHomeRepresentationHandler {
 
     private IHome.IHomeRepresentationDelegate representationDelegate;
-    //private Button btnListTask,btnNewProject,btnInfoProject;
 
     private AppCompatTextView txtDayToday;
     private AppCompatButton btnCalendar;
@@ -166,7 +165,6 @@ public class HomeViewController extends AbstractViewController implements IHome.
 
     @Override
     public void resume() {
-
     }
 
     @Override

@@ -12,4 +12,6 @@
     <color name="blue_background">#1890ff</color>
 
     <color name="color_text">#c0c0c0</color>
+    <color name="background_tint_fields">#f2f9ff</color>
+    <color name="background_form_buttons">#faad14</color>
 </resources>
