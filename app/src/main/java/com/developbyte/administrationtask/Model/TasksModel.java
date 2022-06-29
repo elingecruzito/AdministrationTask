@@ -14,6 +14,13 @@ public class TasksModel {
     public TasksModel() {
     }
 
+    public TasksModel(String task, String hour, String date) {
+        this.task = task;
+        this.hour = hour;
+        this.date = date;
+        this.status = TasksModel.STATUS_IN_PROGRESS;
+    }
+
     public TasksModel(String task, String project, String hour, String date, int status) {
         this.task = task;
         this.project = project;

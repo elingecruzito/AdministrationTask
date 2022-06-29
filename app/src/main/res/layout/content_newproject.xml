@@ -45,37 +45,34 @@
             android:layout_height="wrap_content"
             android:background="@drawable/border_fields"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeLabelFields"
-            android:text="@string/lbl_title_new_task"/>
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/padding_view">
 
-        <RelativeLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@style/ThemeLabelFields"
+                android:text="@string/lbl_title_new_task"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_add_new_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/ic_baseline_playlist_add"
+                android:drawableTint="@color/white"
+                android:background="@drawable/border_form_buttoms"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lst_new_project_task"
             android:layout_width="match_parent"
-            android:layout_height="500dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:gravity="bottom|right"
-                android:padding="@dimen/padding_view">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_add_new_task"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/background_form_buttons"
-                    android:src="@drawable/ic_baseline_playlist_add" />/
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/lst_new_project_task"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </RelativeLayout>
+            android:layout_height="470dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -109,7 +109,7 @@ public class HomeViewController extends AbstractViewController implements IHome.
         tbTask.selectTab(tbTask.getTabAt(0));
         setFragmentTabTask(progressFragment);
 
-        btnAddTask = view.findViewById(R.id.btn_add_task);
+        btnAddTask = view.findViewById(R.id.btn_new_project);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
