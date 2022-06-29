@@ -1,7 +1,9 @@
 package com.developbyte.administrationtask.NewProject;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +16,11 @@ import android.widget.TimePicker;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.developbyte.administrationtask.Abstract.AbstractViewController;
 import com.developbyte.administrationtask.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,20 +30,16 @@ public class NewProjectViewController extends AbstractViewController implements 
 
     private INewProject.INewProjectRepresentationDelegate representationDelegate;
 
-    private AppCompatEditText txtNameTask;
-    private AppCompatEditText txtDateTask;
-    private AppCompatEditText txtDateHour;
+    private AppCompatEditText txtNewNameProject;
 
-    private AppCompatButton btnModalCalendar;
-    private AppCompatButton btnModalClock;
+    private RecyclerView lstNewProjectTask;
 
-    private AppCompatButton btnCreateTask;
-    private AppCompatButton btnCancelTask;
+    private FloatingActionButton btnAddNewTask;
+    private AlertDialog.Builder alertDialogAddNewTask;
 
-    private Calendar calendar;
-    private DatePickerDialog datePickerDialog;
-    private TimePickerDialog timePickerDialog;
-    private SimpleDateFormat dateFormat;
+    private AppCompatButton btnCreateProject;
+    private AppCompatButton btnCancelProject;
+
 
     public void setRepresentationDelegate(INewProject.INewProjectRepresentationDelegate representationDelegate) {
         this.representationDelegate = representationDelegate;
@@ -49,7 +49,35 @@ public class NewProjectViewController extends AbstractViewController implements 
     public View init(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.content_newproject, container, false);
 
-        txtNameTask = view.findViewById(R.id.txt_new_name_task);
+        txtNewNameProject = view.findViewById(R.id.txt_new_name_project);
+
+        btnAddNewTask = view.findViewById(R.id.btn_add_new_task);
+        alertDialogAddNewTask = new AlertDialog.Builder(getContext());
+        alertDialogAddNewTask.setView(requireActivity().getLayoutInflater().inflate(R.layout.widget_modal_new_task, null))
+                            .create();
+        btnAddNewTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialogAddNewTask.show();
+            }
+        });
+
+        btnCreateProject = view.findViewById(R.id.btn_create_project);
+        btnCreateProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(getClass().getName(), txtNewNameProject.getText().toString());
+            }
+        });
+        btnCancelProject = view.findViewById(R.id.btn_cancel_project);
+        btnCancelProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        /*txtNameTask = view.findViewById(R.id.txt_new_name_task);
         txtDateTask = view.findViewById(R.id.txt_date_task);
         txtDateHour = view.findViewById(R.id.txt_date_hour);
 
@@ -93,20 +121,7 @@ public class NewProjectViewController extends AbstractViewController implements 
             }
         });
 
-        btnCreateTask = view.findViewById(R.id.btn_create_task);
-        btnCreateTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(getClass().getName(), txtNameTask.getText().toString() + " | " + txtDateTask.getText().toString() + " | " + txtDateHour.getText().toString());
-            }
-        });
-        btnCancelTask = view.findViewById(R.id.btn_cancel_task);
-        btnCancelTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+         */
 
 
         return view;
@@ -130,9 +145,6 @@ public class NewProjectViewController extends AbstractViewController implements 
 
     @Override
     public void onBackPressed() {
-        txtNameTask.setText("");
-        txtDateTask.setText("");
-        txtDateHour.setText("");
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
