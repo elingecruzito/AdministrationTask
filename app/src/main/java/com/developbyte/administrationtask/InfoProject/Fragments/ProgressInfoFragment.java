@@ -22,22 +22,15 @@ import java.util.List;
 public class ProgressInfoFragment extends Fragment {
 
     private View view;
-    private List<TasksModel> tasksModelList;
-    private Context context;
-
     private RecyclerView lstInfoProgressTask;
     private LinearLayoutManager layoutManagerInfoProgressTask;
     private ListInfoTaskProgressAdapter infoTaskProgressAdapter;
 
     public ProgressInfoFragment(List<TasksModel> tasksModelList, Context context) {
-        this.tasksModelList = tasksModelList;
-        this.context = context;
-
         infoTaskProgressAdapter = new ListInfoTaskProgressAdapter(tasksModelList, context);
     }
 
     public void setTasksModelList(List<TasksModel> tasksModelList) {
-        this.tasksModelList = tasksModelList;
         infoTaskProgressAdapter.setTasksModels(tasksModelList);
     }
 

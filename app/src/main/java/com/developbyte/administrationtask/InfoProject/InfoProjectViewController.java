@@ -47,6 +47,9 @@ public class InfoProjectViewController extends AbstractViewController implements
 
     private ProgressInfoFragment progressInfoFragment;
     private CompleteInfoFragment completeInfoFragment;
+
+    int sizeInfoProgressTask;
+    int sizeInfoCompleteTask;
     
 
     public void setRepresentationDelegate(IInfoProject.IInfoProjectRepresentationDelegate representationDelegate) {
@@ -56,6 +59,9 @@ public class InfoProjectViewController extends AbstractViewController implements
     @Override
     public View init(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.content_infoproject, container, false);
+
+        representationDelegate.getAllProgressTask(0);
+        representationDelegate.getAllCompleteTask(0);
 
         txtNameProjectInfo = view.findViewById(R.id.txt_name_project_info);
 
@@ -67,8 +73,6 @@ public class InfoProjectViewController extends AbstractViewController implements
         chartProject.setChart(pie);
 
         tbTaskInfo = view.findViewById(R.id.tb_task_info);
-        representationDelegate.getAllProgressTask(0);
-        representationDelegate.getAllCompleteTask(0);
         tbTaskInfo.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -128,6 +132,7 @@ public class InfoProjectViewController extends AbstractViewController implements
 
     @Override
     public void setAllProgressTask(List<TasksModel> progressTask) {
+        sizeInfoProgressTask = progressTask.size();
         if(progressInfoFragment == null){
             progressInfoFragment = new ProgressInfoFragment(progressTask, getContext());
         }
@@ -135,7 +140,12 @@ public class InfoProjectViewController extends AbstractViewController implements
     }
 
     @Override
-    public void setAllCompleteTask(List<TasksModel> progressTask) {
+    public void setAllCompleteTask(List<TasksModel> completeTask) {
+        sizeInfoCompleteTask = completeTask.size();
+        if(completeInfoFragment == null){
+            completeInfoFragment = new CompleteInfoFragment(completeTask, getContext());
+        }
+        completeInfoFragment.setTasksModelList(completeTask);
     }
 
     public void setDataChart(){
@@ -146,11 +156,11 @@ public class InfoProjectViewController extends AbstractViewController implements
 
         data.add(new ValueDataEntry(
                 getResources().getString(R.string.lbl_chart_complete),
-                ThreadLocalRandom.current().nextInt(0, 999999)
+                sizeInfoCompleteTask
         ));
         data.add(new ValueDataEntry(
                 getResources().getString(R.string.lbl_chart_progress),
-                ThreadLocalRandom.current().nextInt(0, 999999)
+                sizeInfoProgressTask
         ));
     }
 

@@ -19,7 +19,7 @@ public interface IInfoProject {
     interface IInfoProjectRepresentationHandler{
         void showInfoProject();
         void setAllProgressTask(List<TasksModel> progressTask);
-        void setAllCompleteTask(List<TasksModel> progressTask);
+        void setAllCompleteTask(List<TasksModel> completeTask);
     }
 
     //Comunica de Service a BusinessComtroller
