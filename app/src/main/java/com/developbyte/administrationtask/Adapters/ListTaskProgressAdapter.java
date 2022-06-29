@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.developbyte.administrationtask.Home.IHome;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
 
@@ -19,10 +20,12 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
 
     private List<TasksModel> tasksModelList;
     private Context context;
+    private IHome.IHomeRepresentationDelegate representationDelegate;
 
-    public ListTaskProgressAdapter(List<TasksModel> tasksModelList, Context context) {
+    public ListTaskProgressAdapter(List<TasksModel> tasksModelList, Context context, IHome.IHomeRepresentationDelegate representationDelegate) {
         this.tasksModelList = tasksModelList;
         this.context = context;
+        this.representationDelegate = representationDelegate;
     }
 
     public void setTasksModelList(List<TasksModel> tasksModelList) {
@@ -41,6 +44,12 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
     @Override
     public void onBindViewHolder(@NonNull ListTaskProgressAdapter.ViewHolder holder, int position) {
         holder.iconStatusTask.setBackground(context.getResources().getDrawable(R.mipmap.progress));
+        holder.iconStatusTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                representationDelegate.showInfoProject();
+            }
+        });
         holder.txtNameTask.setText(tasksModelList.get(position).getTask());
         holder.txtNameProject.setText(tasksModelList.get(position).getProject());
         holder.txtDateTask.setText(tasksModelList.get(position).getHour());

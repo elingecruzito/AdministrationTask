@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">AdministrationTask</string>
 
+    <string name="background_view">#eaeaec</string>
+
     <string name="btn_cancel">Cancel</string>
 
     <string name="lbl_title_card_progress">Progress</string>
@@ -15,4 +17,7 @@
     <string name="lbl_field_date">Task Date</string>
     <string name="lbl_field_hour">Task Hour</string>
     <string name="btn_create_task">Create task</string>
+
+    <string name="lbl_chart_complete">Complete</string>
+    <string name="lbl_chart_progress">Progress</string>
 </resources>

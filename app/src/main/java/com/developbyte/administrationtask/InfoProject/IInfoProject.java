@@ -1,5 +1,9 @@
 package com.developbyte.administrationtask.InfoProject;
 
+import com.developbyte.administrationtask.Model.TasksModel;
+
+import java.util.List;
+
 public interface IInfoProject {
     //Comunica de MasterBussinesController a BussinesController
     interface IInfoProjectTransactionHandler{
@@ -14,6 +18,8 @@ public interface IInfoProject {
     //Comunica de BusinessController a ViewController
     interface IInfoProjectRepresentationHandler{
         void showInfoProject();
+        void setAllProgressTask(List<TasksModel> progressTask);
+        void setAllCompleteTask(List<TasksModel> progressTask);
     }
 
     //Comunica de Service a BusinessComtroller
@@ -26,6 +32,7 @@ public interface IInfoProject {
 
     //Comunica de ViewController a Businnes
     interface IInfoProjectRepresentationDelegate{
-        
+        void getAllProgressTask(int idProject);
+        void getAllCompleteTask(int idProject);
     }
 }

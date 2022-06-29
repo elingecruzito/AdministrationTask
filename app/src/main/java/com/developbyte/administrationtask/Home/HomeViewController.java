@@ -46,8 +46,6 @@ public class HomeViewController extends AbstractViewController implements IHome.
     private ListDaysMountAdapter listDaysMountAdapter;
 
     private TabLayout tbTask;
-    private FrameLayout fmTabTask;
-    private Fragment fragmentTask;
 
     private ProgressFragment progressFragment;
     private CompleteFragment completeFragment;
@@ -79,9 +77,7 @@ public class HomeViewController extends AbstractViewController implements IHome.
 
         representationDelegate.getDaysOfCurrentMount(YearMonth.now().getYear(), YearMonth.now().getMonthValue());
 
-        fmTabTask = view.findViewById(R.id.fm_tab_task);
         tbTask = view.findViewById(R.id.tb_task);
-        tbTask.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         representationDelegate.getTaskInProgress("");
         representationDelegate.getTaskComplete("");
@@ -89,17 +85,15 @@ public class HomeViewController extends AbstractViewController implements IHome.
         tbTask.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.i(getClass().getName(), tab.getText().toString());
                 switch (tab.getPosition()){
                     case 0:
-                        fragmentTask = progressFragment;
+                        setFragmentTabTask(progressFragment);
                         break;
 
                     case 1:
-                        fragmentTask = completeFragment;
+                        setFragmentTabTask(completeFragment);
                         break;
                 }
-                setFragmentTabTask(fragmentTask);
             }
 
             @Override
@@ -196,7 +190,7 @@ public class HomeViewController extends AbstractViewController implements IHome.
     @Override
     public void setTaskInProgress(List<TasksModel> taskInProgress) {
         if(progressFragment == null){
-            progressFragment = new ProgressFragment(taskInProgress);
+            progressFragment = new ProgressFragment(taskInProgress, representationDelegate);
         }else{
             progressFragment.setTasksModelList(taskInProgress);
         }
