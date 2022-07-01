@@ -13,10 +13,12 @@ import com.developbyte.administrationtask.ListTask.ListTaskViewController;
 import com.developbyte.administrationtask.NewProject.NewProjectBusinessController;
 import com.developbyte.administrationtask.NewProject.NewProjectService;
 import com.developbyte.administrationtask.NewProject.NewProjectViewController;
+import com.developbyte.administrationtask.Widgets.Utilerias;
 
 public class InjectionManager {
 
     private static InjectionManager instance;
+    public static final Utilerias utilerias = new Utilerias();
 
     public static InjectionManager getInstance(){
         if(instance == null)
@@ -26,7 +28,7 @@ public class InjectionManager {
 
     public void startHome(HomeMasterViewController homeMasterViewController){
         MasterBusinessController masterBusinessController = new MasterBusinessController();
-
+        utilerias.setActivity(homeMasterViewController);
         //------------------------------------------------HOME---------------------------------------------
 
         HomeBusinessController homeBusinessController = new HomeBusinessController();
@@ -76,8 +78,10 @@ public class InjectionManager {
         newprojectViewController.setTag(HomeMasterViewController.NEWPROJECT_CONTROLLER);
         newprojectViewController.setRepresentationDelegate(newprojectBusinessController);
         newprojectViewController.setMasterViewController(homeMasterViewController);
+        newprojectViewController.setUtilerias(utilerias);
 
         newprojectservice.setInformationDelegate(newprojectBusinessController);
+        newprojectservice.setContext(homeMasterViewController);
 
         homeMasterViewController.addFragment(newprojectViewController);
         masterBusinessController.setNewProjectTransactionHandler(newprojectBusinessController);

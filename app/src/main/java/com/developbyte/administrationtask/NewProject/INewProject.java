@@ -1,5 +1,11 @@
 package com.developbyte.administrationtask.NewProject;
 
+import android.content.Context;
+
+import com.developbyte.administrationtask.Model.TasksModel;
+
+import java.util.List;
+
 public interface INewProject {
     //Comunica de MasterBussinesController a BussinesController
     interface INewProjectTransactionHandler{
@@ -22,10 +28,11 @@ public interface INewProject {
 
     //Comunica de BusinessController a Service
     interface INewProjectInformationHandler{
+        void createNewProject(String name, List<TasksModel> tasksModelList);
     }
 
     //Comunica de ViewController a Businnes
     interface INewProjectRepresentationDelegate{
-        
+        void createNewProject(String name, List<TasksModel> tasksModelList);
     }
 }

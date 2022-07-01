@@ -1,8 +1,12 @@
 package com.developbyte.administrationtask.NewProject;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.developbyte.administrationtask.Abstract.AbstractBusinessController;
+import com.developbyte.administrationtask.Model.TasksModel;
+
+import java.util.List;
 
 public class NewProjectBusinessController extends AbstractBusinessController
                         implements INewProject.INewProjectTransactionHandler, //MasterBussinesController a BussinesController 
@@ -30,5 +34,8 @@ public class NewProjectBusinessController extends AbstractBusinessController
         representationHandler.showNewProject();
     }
 
-
+    @Override
+    public void createNewProject(String name, List<TasksModel> tasksModelList) {
+        informationHandler.createNewProject(name, tasksModelList);
+    }
 }

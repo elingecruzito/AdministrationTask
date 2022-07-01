@@ -14,4 +14,5 @@
     <color name="color_text">#c0c0c0</color>
     <color name="background_tint_fields">#f2f9ff</color>
     <color name="background_form_buttons">#faad14</color>
+    <color name="btn_color_red">#D50000</color>
 </resources>

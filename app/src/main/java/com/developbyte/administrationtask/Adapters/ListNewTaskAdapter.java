@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,10 +25,18 @@ public class ListNewTaskAdapter extends RecyclerView.Adapter<ListNewTaskAdapter.
         }
         listTasksModels.add(tasksModel);
         notifyDataSetChanged();
+
     }
 
     public List<TasksModel> getListTasksModels() {
         return listTasksModels;
+    }
+
+    public void clearListTaskModels(){
+        if(listTasksModels != null){
+            listTasksModels.clear();
+            notifyDataSetChanged();
+        }
     }
 
     @NonNull
@@ -43,6 +52,13 @@ public class ListNewTaskAdapter extends RecyclerView.Adapter<ListNewTaskAdapter.
         holder.txtNameNewTaskProject.setText(listTasksModels.get(position).getTask());
         holder.txtDateNewTaskProject.setText(listTasksModels.get(position).getDate());
         holder.txtHourNewTaskProject.setText(listTasksModels.get(position).getHour());
+        holder.btnDeleteItemTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listTasksModels.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -55,6 +71,7 @@ public class ListNewTaskAdapter extends RecyclerView.Adapter<ListNewTaskAdapter.
         private AppCompatTextView txtDateNewTaskProject;
         private AppCompatTextView txtHourNewTaskProject;
         private AppCompatTextView txtNameNewTaskProject;
+        private AppCompatImageView btnDeleteItemTask;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +79,7 @@ public class ListNewTaskAdapter extends RecyclerView.Adapter<ListNewTaskAdapter.
             txtDateNewTaskProject = itemView.findViewById(R.id.txt_date_new_task_project);
             txtHourNewTaskProject = itemView.findViewById(R.id.txt_hour_new_task_project);
             txtNameNewTaskProject = itemView.findViewById(R.id.txt_name_new_task_project);
+            btnDeleteItemTask = itemView.findViewById(R.id.btn_delete_item_task);
         }
     }
 }
