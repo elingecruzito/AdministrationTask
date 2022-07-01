@@ -17,7 +17,9 @@ import com.developbyte.administrationtask.Abstract.AbstractViewController;
 import com.developbyte.administrationtask.Adapters.ListNewTaskAdapter;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
+import com.developbyte.administrationtask.Widgets.RunnableWidget;
 import com.developbyte.administrationtask.Widgets.Utilerias;
+import com.developbyte.administrationtask.Widgets.WidgetCreateNewTask;
 
 public class NewProjectViewController extends AbstractViewController implements INewProject.INewProjectRepresentationHandler {
 
@@ -25,28 +27,14 @@ public class NewProjectViewController extends AbstractViewController implements 
     private Utilerias utilerias;
 
     private AppCompatEditText txtNewNameProject;
-
+    private AppCompatButton btnAddNewTask;
     private RecyclerView lstNewProjectTask;
     private LinearLayoutManager linearLayoutManagerNewProjectTask;
     private ListNewTaskAdapter listNewTaskAdapter;
-
-    private AppCompatButton btnAddNewTask;
-    private AlertDialog.Builder alertDialogAddNewTask;
-    private AlertDialog alertDialog;
-    private View viewAddNewTask;
-    private AppCompatEditText txtNameNewTask;
-    private AppCompatEditText txtDateNewTask;
-    private AppCompatButton btnModalCalendar;
-    private AppCompatEditText txtDateNewHour;
-    private AppCompatButton btnModalClock;
-    private AppCompatButton btnCancelNewTask;
-    private AppCompatButton btnCreateNewTask;
-
-    private DatePickerDialog datePickerDialog;
-    private TimePickerDialog timePickerDialog;
-
     private AppCompatButton btnCreateProject;
     private AppCompatButton btnCancelProject;
+
+    private WidgetCreateNewTask newTask;
 
 
     public void setRepresentationDelegate(INewProject.INewProjectRepresentationDelegate representationDelegate) {
@@ -61,6 +49,8 @@ public class NewProjectViewController extends AbstractViewController implements 
     public View init(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.content_newproject, container, false);
 
+        newTask = new WidgetCreateNewTask(getActivity(), utilerias);
+
         txtNewNameProject = view.findViewById(R.id.txt_new_name_project);
         lstNewProjectTask = view.findViewById(R.id.lst_new_project_task);
         linearLayoutManagerNewProjectTask = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -68,12 +58,11 @@ public class NewProjectViewController extends AbstractViewController implements 
         listNewTaskAdapter = new ListNewTaskAdapter();
         lstNewProjectTask.setAdapter(listNewTaskAdapter);
 
-        this.createViewNewTask();
         btnAddNewTask = view.findViewById(R.id.btn_add_new_task);
         btnAddNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.show();
+                newTask.showCreateNewTask(listNewTaskAdapter, new RunnableWidget());
             }
         });
 
@@ -135,60 +124,4 @@ public class NewProjectViewController extends AbstractViewController implements 
         masterViewController.presetFragment(this.tag);
     }
 
-    private void createViewNewTask(){
-        alertDialogAddNewTask = new AlertDialog.Builder(getContext());
-
-        viewAddNewTask = requireActivity().getLayoutInflater().inflate(R.layout.widget_modal_new_task, null);
-        txtNameNewTask = viewAddNewTask.findViewById(R.id.txt_name_new_task);
-
-        txtDateNewTask = viewAddNewTask.findViewById(R.id.txt_date_new_task);
-        datePickerDialog = utilerias.getDatePickerDialog(getContext(), txtDateNewTask);
-        btnModalCalendar = viewAddNewTask.findViewById(R.id.btn_modal_calendar);
-        btnModalCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.show();
-            }
-        });
-
-        txtDateNewHour = viewAddNewTask.findViewById(R.id.txt_date_new_hour);
-        timePickerDialog = utilerias.getTimePickerDialog(getContext(), txtDateNewHour);
-        btnModalClock = viewAddNewTask.findViewById(R.id.btn_modal_clock);
-        btnModalClock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timePickerDialog.show();
-            }
-        });
-
-        btnCancelNewTask = viewAddNewTask.findViewById(R.id.btn_cancel_new_task);
-        btnCancelNewTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearModalNewTask();
-                alertDialog.dismiss();
-            }
-        });
-
-        btnCreateNewTask = viewAddNewTask.findViewById(R.id.btn_create_new_task);
-        btnCreateNewTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listNewTaskAdapter.setTasksModel(new TasksModel(
-                        txtNameNewTask.getText().toString(),
-                        txtDateNewHour.getText().toString(),
-                        txtDateNewTask.getText().toString()
-                ));
-                clearModalNewTask();
-                alertDialog.dismiss();
-            }
-        });
-        alertDialog = alertDialogAddNewTask.setView(viewAddNewTask).create();
-    }
-
-    private void clearModalNewTask(){
-        txtNameNewTask.setText("");
-        txtDateNewTask.setText("");
-        txtDateNewHour.setText("");
-    }
 }
