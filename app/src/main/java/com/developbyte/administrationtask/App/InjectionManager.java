@@ -44,6 +44,8 @@ public class InjectionManager {
         homeViewController.setMasterViewController(homeMasterViewController);
 
         homeservice.setInformationDelegate(homeBusinessController);
+        homeservice.setContext(homeMasterViewController);
+        homeservice.setUtilerias(utilerias);
 
         homeMasterViewController.addFragment(homeViewController);
         masterBusinessController.setHomeTransactionHandler(homeBusinessController);

@@ -47,13 +47,7 @@ public class InfoProjectBusinessController extends AbstractBusinessController
         }
 
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(0, 999999); i++){
-            tasksModels.add(new TasksModel(
-                    "Task #" + (i+1),
-                    "Project",
-                    "00:00 am",
-                    "dd/mm/yyyy",
-                    TasksModel.STATUS_IN_PROGRESS
-            ));
+            tasksModels.add(new TasksModel());
         }
         representationHandler.setAllProgressTask(tasksModels);
     }
@@ -67,13 +61,7 @@ public class InfoProjectBusinessController extends AbstractBusinessController
         }
 
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(0, 999999); i++){
-            tasksModels.add(new TasksModel(
-                    "Task #" + (i+1),
-                    "Project",
-                    "00:00 am",
-                    "dd/mm/yyyy",
-                    TasksModel.STATUS_COMPLETE
-            ));
+            tasksModels.add(new TasksModel());
         }
         representationHandler.setAllCompleteTask(tasksModels);
     }

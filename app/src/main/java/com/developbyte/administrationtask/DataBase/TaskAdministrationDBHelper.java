@@ -6,12 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.developbyte.administrationtask.DataBase.Entrys.ProjectEntry;
 import com.developbyte.administrationtask.DataBase.Entrys.TaskEntry;
+import com.developbyte.administrationtask.Widgets.Utilerias;
 
 public class TaskAdministrationDBHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "taskAdministration.db";
-
 
     public TaskAdministrationDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,4 +34,5 @@ public class TaskAdministrationDBHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
 }

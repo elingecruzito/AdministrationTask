@@ -1,6 +1,7 @@
 package com.developbyte.administrationtask.Home;
 
 import com.developbyte.administrationtask.Model.DaysMountModel;
+import com.developbyte.administrationtask.Model.MonthsModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 
 import java.util.List;
@@ -25,14 +26,19 @@ public interface IHome {
         void setDaysOfCurrentMount(List<DaysMountModel> daysOfCurrentMount);
         void setTaskInProgress(List<TasksModel> taskInProgress);
         void setTaskComplete(List<TasksModel> taskComplete);
+        void setMonthList(List<MonthsModel> monthList);
     }
 
     //Comunica de Service a BusinessComtroller
     interface IHomeInformationDelegate{
+        void setTaskInProgress(List<TasksModel> taskInProgress);
+        void setTaskComplete(List<TasksModel> taskComplete);
     }
 
     //Comunica de BusinessController a Service
     interface IHomeInformationHandler{
+        void getTaskInProgress(String date);
+        void getTaskComplete(String date);
     }
 
     //Comunica de ViewController a Businnes
@@ -40,10 +46,10 @@ public interface IHome {
         void showListTask();
         void showNewProject();
         void showInfoProject();
-
-        void getDaysOfCurrentMount(int year, int mount);
+        void getDaysOfCurrentMount(int mount);
         void getTaskInProgress(String date);
         void getTaskComplete(String date);
+        void getMonthsList();
         
     }
 }

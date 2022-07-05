@@ -22,7 +22,6 @@ public class ProgressFragment extends Fragment{
     private View view;
     private List<TasksModel> tasksModelList;
     private RecyclerView lstTaskProgress;
-    private LinearLayoutManager layoutManagerTaskProgress;
     private ListTaskProgressAdapter listTaskProgressAdapter;
     private IHome.IHomeRepresentationDelegate representationDelegate;
 
@@ -31,22 +30,13 @@ public class ProgressFragment extends Fragment{
         this.representationDelegate = representationDelegate;
     }
 
-    public void setTasksModelList(List<TasksModel> tasksModelList) {
-        if(listTaskProgressAdapter != null){
-            listTaskProgressAdapter.setTasksModelList(tasksModelList);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_progress, container, false);
 
         lstTaskProgress = view.findViewById(R.id.lst_task_progress);
-
-        layoutManagerTaskProgress = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        lstTaskProgress.setLayoutManager(layoutManagerTaskProgress);
-
+        lstTaskProgress.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         listTaskProgressAdapter = new ListTaskProgressAdapter(tasksModelList, getContext(), representationDelegate);
         lstTaskProgress.setAdapter(listTaskProgressAdapter);
 

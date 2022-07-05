@@ -20,17 +20,9 @@ public class CompleteFragment extends Fragment {
     private View view;
     private List<TasksModel> tasksModelList;
     private RecyclerView lstTaskComplete;
-    private LinearLayoutManager linearLayoutManagerTaskComplete;
-    private ListTaskCompleteAdapter listTaskCompleteAdapter;
 
     public CompleteFragment(List<TasksModel> tasksModelList) {
         this.tasksModelList = tasksModelList;
-    }
-
-    public void setTasksModelList(List<TasksModel> tasksModelList) {
-        if(listTaskCompleteAdapter != null){
-            listTaskCompleteAdapter.setTasksModelList(tasksModelList);
-        }
     }
 
     @Override
@@ -38,12 +30,8 @@ public class CompleteFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_complete, container, false);
 
         lstTaskComplete = view.findViewById(R.id.lst_task_complete);
-
-        linearLayoutManagerTaskComplete = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        lstTaskComplete.setLayoutManager(linearLayoutManagerTaskComplete);
-
-        listTaskCompleteAdapter = new ListTaskCompleteAdapter(tasksModelList, getContext());
-        lstTaskComplete.setAdapter(listTaskCompleteAdapter);
+        lstTaskComplete.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        lstTaskComplete.setAdapter(new ListTaskCompleteAdapter(tasksModelList, getContext()));
 
         return view;
     }

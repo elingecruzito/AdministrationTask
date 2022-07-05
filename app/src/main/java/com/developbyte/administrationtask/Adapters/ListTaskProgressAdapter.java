@@ -28,11 +28,6 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
         this.representationDelegate = representationDelegate;
     }
 
-    public void setTasksModelList(List<TasksModel> tasksModelList) {
-        this.tasksModelList = tasksModelList;
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public ListTaskProgressAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -8,6 +8,7 @@
     android:background="@color/background_view">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_day_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_view"
@@ -26,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
+                android:textColor="@color/color_text"
                 android:text="00"/>
 
 
@@ -33,6 +35,7 @@
                 android:id="@+id/txt_day_text_mount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/color_text"
                 android:text="Mon"/>
 
         </LinearLayout>

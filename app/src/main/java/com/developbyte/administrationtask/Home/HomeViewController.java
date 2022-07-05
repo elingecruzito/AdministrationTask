@@ -1,13 +1,11 @@
 package com.developbyte.administrationtask.Home;
 
+import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
@@ -19,20 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.developbyte.administrationtask.Abstract.AbstractViewController;
 import com.developbyte.administrationtask.Adapters.ListDaysMountAdapter;
+import com.developbyte.administrationtask.Adapters.ModalListMonthsAdapeter;
 import com.developbyte.administrationtask.Home.Fragments.CompleteFragment;
 import com.developbyte.administrationtask.Home.Fragments.ProgressFragment;
 import com.developbyte.administrationtask.Model.DaysMountModel;
+import com.developbyte.administrationtask.Model.MonthsModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormatSymbols;
 import java.time.YearMonth;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 public class HomeViewController extends AbstractViewController implements IHome.IHomeRepresentationHandler {
 
@@ -40,16 +38,21 @@ public class HomeViewController extends AbstractViewController implements IHome.
 
     private AppCompatTextView txtDayToday;
     private AppCompatButton btnCalendar;
+    private AlertDialog.Builder builderMonth;
+    private AlertDialog alertDialogMonths;
+    private View viewDialogMonths;
+    private RecyclerView lstModalMonths;
+    private ModalListMonthsAdapeter listMonthsAdapeter;
+    private AppCompatButton btnConfirmationModalMonths;
 
     private RecyclerView lstDaysMount;
-    private LinearLayoutManager layoutManagerDaysMount;
     private ListDaysMountAdapter listDaysMountAdapter;
 
+    private AppCompatTextView txtTaskProgress;
+    private AppCompatTextView txtTaskComplete;
+
     private TabLayout tbTask;
-
-    private ProgressFragment progressFragment;
-    private CompleteFragment completeFragment;
-
+    private String dateSelected = "";
     private FloatingActionButton btnAddTask;
 
     public void setRepresentationDelegate(IHome.IHomeRepresentationDelegate representationDelegate) {
@@ -61,37 +64,41 @@ public class HomeViewController extends AbstractViewController implements IHome.
     public View init(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.content_home, container, false);
 
+        dateSelected = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/"
+                        + Calendar.getInstance().get(Calendar.MONTH) + "/"
+                        + Calendar.getInstance().get(Calendar.YEAR);
+
         txtDayToday = view.findViewById(R.id.txt_day_today);
         txtDayToday.setText(YearMonth.now().getMonth().name() + " " + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) +", " + YearMonth.now().getYear());
 
-        btnCalendar = view.findViewById(R.id.btn_calendar);
+        btnCalendar = view.findViewById(R.id.btn_select_month);
         btnCalendar.setText(YearMonth.now().getMonth().name());
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListMonths();
+            }
+        });
 
         lstDaysMount = view.findViewById(R.id.lst_days_mount);
-
-        layoutManagerDaysMount = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        lstDaysMount.setLayoutManager(layoutManagerDaysMount);
-
-        listDaysMountAdapter = new ListDaysMountAdapter();
+        lstDaysMount.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        listDaysMountAdapter = new ListDaysMountAdapter(getContext(), representationDelegate);
         lstDaysMount.setAdapter(listDaysMountAdapter);
 
-        representationDelegate.getDaysOfCurrentMount(YearMonth.now().getYear(), YearMonth.now().getMonthValue());
-
+        txtTaskProgress = view.findViewById(R.id.txt_task_progress);
+        txtTaskComplete = view.findViewById(R.id.txt_task_complete);
         tbTask = view.findViewById(R.id.tb_task);
-
-        representationDelegate.getTaskInProgress("");
-        representationDelegate.getTaskComplete("");
 
         tbTask.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        setFragmentTabTask(progressFragment);
+                        representationDelegate.getTaskInProgress(dateSelected);
                         break;
 
                     case 1:
-                        setFragmentTabTask(completeFragment);
+                        representationDelegate.getTaskComplete(dateSelected);
                         break;
                 }
             }
@@ -107,7 +114,8 @@ public class HomeViewController extends AbstractViewController implements IHome.
             }
         });
         tbTask.selectTab(tbTask.getTabAt(0));
-        setFragmentTabTask(progressFragment);
+        representationDelegate.getTaskComplete(dateSelected);
+        representationDelegate.getTaskInProgress(dateSelected);
 
         btnAddTask = view.findViewById(R.id.btn_new_project);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -117,33 +125,7 @@ public class HomeViewController extends AbstractViewController implements IHome.
             }
         });
 
-        /*
-        btnListTask = view.findViewById(R.id.btnListTask);
-        btnNewProject = view.findViewById(R.id.btnNewProject);
-        btnInfoProject = view.findViewById(R.id.btnInfoProject);
-
-        btnListTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                representationDelegate.showListTask();
-            }
-        });
-
-        btnNewProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                representationDelegate.showNewProject();
-            }
-        });
-
-        btnInfoProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                representationDelegate.showInfoProject();
-            }
-        });
-        */
-
+        representationDelegate.getDaysOfCurrentMount(YearMonth.now().getMonthValue());
 
         return view;
     }
@@ -182,26 +164,70 @@ public class HomeViewController extends AbstractViewController implements IHome.
         return masterViewController.presetFragment2(tag);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void setDaysOfCurrentMount(List<DaysMountModel> daysOfCurrentMount) {
-        listDaysMountAdapter.setDaysMountModelList(daysOfCurrentMount);
+        int currentMonth = listMonthsAdapeter == null ? YearMonth.now().getMonthValue() : listMonthsAdapeter.getIndexSelected();
+        listDaysMountAdapter.setDaysMountModelList(daysOfCurrentMount, currentMonth);
+
+        dateSelected = (listDaysMountAdapter.getIndexToday() + 1) + "/"
+                + currentMonth + "/"
+                + Calendar.getInstance().get(Calendar.YEAR);
+
+        btnCalendar.setText(DateFormatSymbols.getInstance().getMonths()[currentMonth - 1]);
+        lstDaysMount.scrollToPosition(listDaysMountAdapter.getIndexToday());
+
+        if(tbTask.getSelectedTabPosition() == 0){
+            representationDelegate.getTaskInProgress(dateSelected);
+        }else{
+            representationDelegate.getTaskComplete(dateSelected);
+        }
     }
 
     @Override
     public void setTaskInProgress(List<TasksModel> taskInProgress) {
-        if(progressFragment == null){
-            progressFragment = new ProgressFragment(taskInProgress, representationDelegate);
-        }else{
-            progressFragment.setTasksModelList(taskInProgress);
-        }
+        txtTaskProgress.setText(taskInProgress.size() + " " + getResources().getString(R.string.lbl_card_name_task));
+        setFragmentTabTask(new ProgressFragment(taskInProgress, representationDelegate));
+
     }
 
     @Override
     public void setTaskComplete(List<TasksModel> taskComplete) {
-        if(completeFragment == null){
-            completeFragment = new CompleteFragment(taskComplete);
-        }else{
-            completeFragment.setTasksModelList(taskComplete);
+        txtTaskComplete.setText(taskComplete.size() + " " + getResources().getString(R.string.lbl_card_name_task));
+        setFragmentTabTask(new CompleteFragment(taskComplete));
+    }
+
+    @Override
+    public void setMonthList(List<MonthsModel> monthList) {
+        lstModalMonths = viewDialogMonths.findViewById(R.id.lst_months_modal);
+        lstModalMonths.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        listMonthsAdapeter = new ModalListMonthsAdapeter(monthList, getContext());
+        lstModalMonths.setAdapter(listMonthsAdapeter);
+        lstModalMonths.scrollToPosition(listMonthsAdapeter.getIndexSelected() - 2 );
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showListMonths(){
+
+        if(builderMonth == null){
+            builderMonth = new AlertDialog.Builder(getContext());
+            viewDialogMonths = requireActivity().getLayoutInflater().inflate(R.layout.widget_modal_list_month, null);
+
+            representationDelegate.getMonthsList();
+
+            btnConfirmationModalMonths = viewDialogMonths.findViewById(R.id.btn_confirmation_modal_months);
+            btnConfirmationModalMonths.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    representationDelegate.getDaysOfCurrentMount(listMonthsAdapeter.getIndexSelected());
+                    alertDialogMonths.dismiss();
+                }
+            });
+
+            alertDialogMonths = builderMonth.setView(viewDialogMonths).create();
         }
+        alertDialogMonths.show();
+
     }
 }

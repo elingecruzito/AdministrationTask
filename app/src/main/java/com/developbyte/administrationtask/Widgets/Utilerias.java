@@ -20,6 +20,7 @@ import com.developbyte.administrationtask.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 
 import javax.security.auth.callback.Callback;
 
@@ -37,6 +38,7 @@ public class Utilerias {
     private AppCompatTextView lblMessageModal;
     private AppCompatButton btnCancelModal;
     private AppCompatButton btnConfirmationModal;
+
 
     public Utilerias() {
         calendar = Calendar.getInstance();
@@ -114,4 +116,17 @@ public class Utilerias {
         });
         alertDialog.show();
     }
+
+    public String randomString(){
+        String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random RANDOM = new Random();
+        StringBuilder sb = new StringBuilder(RANDOM.nextInt(999));
+
+        for (int i = 0; i < sb.capacity(); i++) {
+            sb.append(DATA.charAt(RANDOM.nextInt(DATA.length())));
+        }
+        return sb.toString();
+    }
+
+
 }

@@ -32,6 +32,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
                     android:text="Title task"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -50,6 +53,9 @@
                 android:id="@+id/txt_name_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
                 android:text="Title project"/>
 
 

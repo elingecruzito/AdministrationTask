@@ -5,9 +5,12 @@
 
     <string name="btn_cancel">Cancel</string>
 
+    <string name="lbl_title_modal_list_months">Select a month</string>
     <string name="lbl_title_card_progress">Progress</string>
     <string name="lbl_title_card_complete">Complete</string>
     <string name="lbl_today">Today</string>
+
+    <string name="lbl_card_name_task"> tasks</string>
 
     <string name="lbl_tab_title_progress">Task in progress</string>
     <string name="lbl_tab_title_complete">Task complet</string>

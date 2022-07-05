@@ -2,7 +2,9 @@ package com.developbyte.administrationtask.Model;
 
 public class TasksModel {
 
+    private int id_task;
     private String task;
+    private int id_project;
     private String project;
     private String hour;
     private String date;
@@ -18,15 +20,24 @@ public class TasksModel {
         this.task = task;
         this.hour = hour;
         this.date = date;
-        this.status = TasksModel.STATUS_IN_PROGRESS;
     }
 
-    public TasksModel(String task, String project, String hour, String date, int status) {
+    public TasksModel(int id_task, String task, int id_project, String project, String hour, String date, int status) {
+        this.id_task = id_task;
         this.task = task;
+        this.id_project = id_project;
         this.project = project;
         this.hour = hour;
         this.date = date;
         this.status = status;
+    }
+
+    public int getId_task() {
+        return id_task;
+    }
+
+    public void setId_task(int id_task) {
+        this.id_task = id_task;
     }
 
     public String getTask() {
@@ -35,6 +46,14 @@ public class TasksModel {
 
     public void setTask(String task) {
         this.task = task;
+    }
+
+    public int getId_project() {
+        return id_project;
+    }
+
+    public void setId_project(int id_project) {
+        this.id_project = id_project;
     }
 
     public String getProject() {
