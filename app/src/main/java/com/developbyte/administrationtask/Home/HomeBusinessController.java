@@ -66,8 +66,8 @@ public class HomeBusinessController extends AbstractBusinessController
     }
 
     @Override
-    public void showInfoProject() {
-        transactionDelegate.initInfoProject();
+    public void showInfoProject(int id) {
+        transactionDelegate.initInfoProject(id);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

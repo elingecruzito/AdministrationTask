@@ -32,6 +32,7 @@ import com.anychart.anychart.ValueDataEntry;
 import com.developbyte.administrationtask.Abstract.AbstractViewController;
 import com.developbyte.administrationtask.InfoProject.Fragments.CompleteInfoFragment;
 import com.developbyte.administrationtask.InfoProject.Fragments.ProgressInfoFragment;
+import com.developbyte.administrationtask.Model.ProjectModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +48,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class InfoProjectViewController extends AbstractViewController implements IInfoProject.IInfoProjectRepresentationHandler {
 
+    private int id_project;
+
     private IInfoProject.IInfoProjectRepresentationDelegate representationDelegate;
     private AppCompatTextView txtNameProjectInfo;
 
@@ -57,11 +60,8 @@ public class InfoProjectViewController extends AbstractViewController implements
     private TabLayout tbTaskInfo;
     private FloatingActionButton btnAddTaskInfo;
 
-    private ProgressInfoFragment progressInfoFragment;
-    private CompleteInfoFragment completeInfoFragment;
-
-    int sizeInfoProgressTask;
-    int sizeInfoCompleteTask;
+    int sizeInfoProgressTask = 0;
+    int sizeInfoCompleteTask = 0;
 
     private AlertDialog.Builder alertDialogAddNewTask;
     private AlertDialog alertDialog;
@@ -88,17 +88,10 @@ public class InfoProjectViewController extends AbstractViewController implements
     public View init(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.content_infoproject, container, false);
 
-        representationDelegate.getAllProgressTask(0);
-        representationDelegate.getAllCompleteTask(0);
-
         txtNameProjectInfo = view.findViewById(R.id.txt_name_project_info);
-
-        pie = AnyChart.pie();
-        pie.setBackground(getResources().getString(R.string.background_view));
-        setDataChart();
-        pie.setData(data);
         chartProject = view.findViewById(R.id.chart_project);
-        chartProject.setChart(pie);
+
+        representationDelegate.getDataProject(id_project);
 
         tbTaskInfo = view.findViewById(R.id.tb_task_info);
         tbTaskInfo.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -106,10 +99,10 @@ public class InfoProjectViewController extends AbstractViewController implements
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        setFragmentTabTask(progressInfoFragment);
+                        representationDelegate.getAllProgressTask(id_project);
                         break;
                     case 1:
-                        setFragmentTabTask(completeInfoFragment);
+                        representationDelegate.getAllCompleteTask(id_project);
                         break;
                 }
             }
@@ -125,7 +118,8 @@ public class InfoProjectViewController extends AbstractViewController implements
             }
         });
         tbTaskInfo.selectTab(tbTaskInfo.getTabAt(0));
-        setFragmentTabTask(progressInfoFragment);
+        representationDelegate.getAllCompleteTask(id_project);
+        representationDelegate.getAllProgressTask(id_project);
 
         btnAddTaskInfo = view.findViewById(R.id.btn_add_task_info);
         this.createViewNewTask();
@@ -161,29 +155,34 @@ public class InfoProjectViewController extends AbstractViewController implements
     }
 
     @Override
-    public void showInfoProject() {
+    public void showInfoProject(int id) {
+        this.id_project = id;
         masterViewController.presetFragment(this.tag);
+    }
+
+    @Override
+    public void setDataProject(ProjectModel project) {
+        txtNameProjectInfo.setText(project.getProject_name());
     }
 
     @Override
     public void setAllProgressTask(List<TasksModel> progressTask) {
         sizeInfoProgressTask = progressTask.size();
-        if(progressInfoFragment == null){
-            progressInfoFragment = new ProgressInfoFragment(progressTask, getContext());
-        }
-        progressInfoFragment.setTasksModelList(progressTask);
+        setDataChart();
+        setFragmentTabTask(new ProgressInfoFragment(progressTask));
     }
 
     @Override
     public void setAllCompleteTask(List<TasksModel> completeTask) {
         sizeInfoCompleteTask = completeTask.size();
-        if(completeInfoFragment == null){
-            completeInfoFragment = new CompleteInfoFragment(completeTask, getContext());
-        }
-        completeInfoFragment.setTasksModelList(completeTask);
+        setDataChart();
+        setFragmentTabTask(new CompleteInfoFragment(completeTask));
     }
 
     public void setDataChart(){
+
+        pie = AnyChart.pie();
+        pie.setBackground(getResources().getString(R.string.background_view));
 
         if (data.size() > 0){
             data.clear();
@@ -197,6 +196,9 @@ public class InfoProjectViewController extends AbstractViewController implements
                 getResources().getString(R.string.lbl_chart_progress),
                 sizeInfoProgressTask
         ));
+
+        pie.setData(data);
+        chartProject.setChart(pie);
     }
 
     private void setFragmentTabTask(Fragment fragmentTask) {

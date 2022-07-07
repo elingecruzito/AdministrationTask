@@ -42,8 +42,8 @@ public class MasterBusinessController implements  IHome.IHomeTransactionDelegate
         newprojectTransactionHandler.startNewProject();
     }
     @Override
-    public void initInfoProject() {
-        infoprojectTransactionHandler.startInfoProject();
+    public void initInfoProject(int id) {
+        infoprojectTransactionHandler.startInfoProject(id);
     }
 
 }

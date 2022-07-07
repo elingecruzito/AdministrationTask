@@ -16,7 +16,7 @@ public interface IHome {
     interface IHomeTransactionDelegate{
         void initListTask();
         void initNewProject();
-        void initInfoProject();
+        void initInfoProject(int id);
         
     }
 
@@ -45,7 +45,7 @@ public interface IHome {
     interface IHomeRepresentationDelegate{
         void showListTask();
         void showNewProject();
-        void showInfoProject();
+        void showInfoProject(int id);
         void getDaysOfCurrentMount(int mount);
         void getTaskInProgress(String date);
         void getTaskComplete(String date);

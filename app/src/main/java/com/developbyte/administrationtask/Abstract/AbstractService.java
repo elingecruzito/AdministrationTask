@@ -1,37 +1,62 @@
 package com.developbyte.administrationtask.Abstract;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.developbyte.administrationtask.DataBase.Entrys.ProjectEntry;
+import com.developbyte.administrationtask.DataBase.Entrys.TaskEntry;
+import com.developbyte.administrationtask.DataBase.TaskAdministrationDBHelper;
+import com.developbyte.administrationtask.Model.TasksModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractService
 {
-    /*protected Context mContext;
-    protected IMementoHandler mMementoHandler;
-    protected UserPreferences userPreferences;
-    protected SpiceManager spiceManager;
-    protected Activity activity;
-    protected IMessageRepresentationHandler messageRepresentationHandler;
 
+    public TaskAdministrationDBHelper dbHelper;
+    public SQLiteDatabase db;
+    public Cursor cursor;
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public List<TasksModel> modelList;
+
+    private void initListModel(){
+        if(modelList == null){
+            modelList = new ArrayList<>();
+        }else if(modelList.size() > 0){
+            modelList.clear();
+        }
     }
 
-    public void setContext(Context context) {
-        mContext = context;
-    }
+    @SuppressLint("Range")
+    public void loadData(String query, String[] selectionArgs, Context context){
+        
+        initListModel();
+        
+        dbHelper = new TaskAdministrationDBHelper(context);
+        db = dbHelper.getReadableDatabase();
 
-    public void setMementoHandler(IMementoHandler mementoHandler) {
-        mMementoHandler = mementoHandler;
-    }
+        cursor = db.rawQuery(query, selectionArgs);
 
-    //TODO verify if we could use memento as user preferences
-    public void setUserPreferences(UserPreferences userPreferences) {
-        this.userPreferences = userPreferences;
-    }
+        cursor.moveToFirst();
+        if(cursor.getCount() > 0) {
+            do {
+                modelList.add(new TasksModel(
+                        cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_NAME_ID)),
+                        cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_NAME_TASK)),
+                        cursor.getInt(cursor.getColumnIndex(ProjectEntry.COLUMN_NAME_ID)),
+                        cursor.getString(cursor.getColumnIndex(ProjectEntry.COLUMN_NAME_PROJECT)),
+                        cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_NAME_HOUR)),
+                        cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_NAME_DATE)),
+                        cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_NAME_STATUS))
+                ));
+            } while (cursor.moveToNext());
+        }
 
-    public void setSpiceManager(SpiceManager spiceManager) {
-        this.spiceManager = spiceManager;
+        cursor.close();
+        db.close();
+        dbHelper.close();
     }
-
-    public void setMessageRepresentationHandler(IMessageRepresentationHandler messageRepresentationHandler) {
-        this.messageRepresentationHandler = messageRepresentationHandler;
-    }*/
 }

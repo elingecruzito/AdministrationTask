@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:theme="@style/ThemeLabelsLongText"
                 android:text="Name task"/>
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -23,15 +23,10 @@ public class CompleteInfoFragment extends Fragment {
 
     private View view;
     private RecyclerView lstInfoCompletTask;
-    private LinearLayoutManager layoutManagerInfoCompleteTask;
-    private ListInfoTaskCompleteAdapter infoTaskCompleteAdapter;
+    private List<TasksModel> tasksModelList;
 
-    public CompleteInfoFragment(List<TasksModel> tasksModelList, Context context) {
-        infoTaskCompleteAdapter = new ListInfoTaskCompleteAdapter(tasksModelList, context);
-    }
-
-    public void setTasksModelList(List<TasksModel> tasksModelList) {
-        infoTaskCompleteAdapter.setTasksModels(tasksModelList);
+    public CompleteInfoFragment(List<TasksModel> tasksModelList) {
+        this.tasksModelList = tasksModelList;
     }
 
     @Nullable
@@ -40,9 +35,8 @@ public class CompleteInfoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_info_complet, container, false);
 
         lstInfoCompletTask = view.findViewById(R.id.lst_info_complet_task);
-        layoutManagerInfoCompleteTask = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        lstInfoCompletTask.setLayoutManager(layoutManagerInfoCompleteTask);
-        lstInfoCompletTask.setAdapter(infoTaskCompleteAdapter);
+        lstInfoCompletTask.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        lstInfoCompletTask.setAdapter(new ListInfoTaskCompleteAdapter(tasksModelList, getContext()));
 
         return view;
     }

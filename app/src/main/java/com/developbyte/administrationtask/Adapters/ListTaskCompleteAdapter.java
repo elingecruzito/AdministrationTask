@@ -41,7 +41,7 @@ public class ListTaskCompleteAdapter extends RecyclerView.Adapter<ListTaskComple
         holder.lyItemTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                representationDelegate.showInfoProject();
+                representationDelegate.showInfoProject(tasksModelList.get(position).getId_project());
             }
         });
         holder.iconStatusTask.setBackground(context.getResources().getDrawable(R.mipmap.check));

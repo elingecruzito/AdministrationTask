@@ -101,7 +101,8 @@ public class InjectionManager {
         infoprojectViewController.setRepresentationDelegate(infoprojectBusinessController);
         infoprojectViewController.setMasterViewController(homeMasterViewController);
 
-        infoprojectservice.setInformationDelegate(infoprojectBusinessController);
+        infoprojectservice.setiInfoProjectInformationDelegate(infoprojectBusinessController);
+        infoprojectservice.setContext(homeMasterViewController);
 
         homeMasterViewController.addFragment(infoprojectViewController);
         masterBusinessController.setInfoProjectTransactionHandler(infoprojectBusinessController);

@@ -25,11 +25,6 @@ public class ListInfoTaskCompleteAdapter extends RecyclerView.Adapter<ListInfoTa
         this.context = context;
     }
 
-    public void setTasksModels(List<TasksModel> tasksModels) {
-        this.tasksModels = tasksModels;
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public ListInfoTaskCompleteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

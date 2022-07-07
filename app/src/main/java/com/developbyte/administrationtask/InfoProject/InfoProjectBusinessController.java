@@ -3,6 +3,7 @@ package com.developbyte.administrationtask.InfoProject;
 import android.util.Log;
 
 import com.developbyte.administrationtask.Abstract.AbstractBusinessController;
+import com.developbyte.administrationtask.Model.ProjectModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 
 import java.util.ArrayList;
@@ -33,36 +34,38 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     }
 
     @Override
-    public void startInfoProject() {
-        representationHandler.showInfoProject();
+    public void startInfoProject(int id) {
+        representationHandler.showInfoProject(id);
     }
 
 
     @Override
-    public void getAllProgressTask(int idProject) {
-        if(tasksModels == null){
-            tasksModels = new ArrayList<>();
-        }else{
-            tasksModels.clear();
-        }
+    public void getDataProject(int id) {
+        informationHandler.getDataProject(id);
+    }
 
-        for (int i = 0; i < ThreadLocalRandom.current().nextInt(0, 999999); i++){
-            tasksModels.add(new TasksModel());
-        }
-        representationHandler.setAllProgressTask(tasksModels);
+    @Override
+    public void getAllProgressTask(int idProject) {
+        informationHandler.getAllProgressTask(idProject);
     }
 
     @Override
     public void getAllCompleteTask(int idProject) {
-        if(tasksModels == null){
-            tasksModels = new ArrayList<>();
-        }else{
-            tasksModels.clear();
-        }
+       informationHandler.getAllCompleteTask(idProject);
+    }
 
-        for (int i = 0; i < ThreadLocalRandom.current().nextInt(0, 999999); i++){
-            tasksModels.add(new TasksModel());
-        }
-        representationHandler.setAllCompleteTask(tasksModels);
+    @Override
+    public void setDataProject(ProjectModel project) {
+        representationHandler.setDataProject(project);
+    }
+
+    @Override
+    public void setAllProgressTask(List<TasksModel> progressTask) {
+        representationHandler.setAllProgressTask(progressTask);
+    }
+
+    @Override
+    public void setAllCompleteTask(List<TasksModel> completeTask) {
+        representationHandler.setAllCompleteTask(completeTask);
     }
 }

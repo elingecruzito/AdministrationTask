@@ -23,15 +23,10 @@ public class ProgressInfoFragment extends Fragment {
 
     private View view;
     private RecyclerView lstInfoProgressTask;
-    private LinearLayoutManager layoutManagerInfoProgressTask;
-    private ListInfoTaskProgressAdapter infoTaskProgressAdapter;
+    private List<TasksModel> tasksModelList;
 
-    public ProgressInfoFragment(List<TasksModel> tasksModelList, Context context) {
-        infoTaskProgressAdapter = new ListInfoTaskProgressAdapter(tasksModelList, context);
-    }
-
-    public void setTasksModelList(List<TasksModel> tasksModelList) {
-        infoTaskProgressAdapter.setTasksModels(tasksModelList);
+    public ProgressInfoFragment(List<TasksModel> tasksModelList) {
+        this.tasksModelList = tasksModelList;
     }
 
     @Nullable
@@ -41,9 +36,8 @@ public class ProgressInfoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_info_progress, container, false);
 
         lstInfoProgressTask = view.findViewById(R.id.lst_info_progress_task);
-        layoutManagerInfoProgressTask = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        lstInfoProgressTask.setLayoutManager(layoutManagerInfoProgressTask);
-        lstInfoProgressTask.setAdapter(infoTaskProgressAdapter);
+        lstInfoProgressTask.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        lstInfoProgressTask.setAdapter(new ListInfoTaskProgressAdapter(tasksModelList, getContext()));
 
         return view;
     }
