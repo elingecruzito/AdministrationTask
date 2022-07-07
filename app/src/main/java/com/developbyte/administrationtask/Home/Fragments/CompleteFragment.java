@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.developbyte.administrationtask.Adapters.ListTaskCompleteAdapter;
+import com.developbyte.administrationtask.Home.IHome;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
 
@@ -17,12 +18,16 @@ import java.util.List;
 
 public class CompleteFragment extends Fragment {
 
-    private View view;
     private List<TasksModel> tasksModelList;
+    private IHome.IHomeRepresentationDelegate representationDelegate;
+
+    private View view;
     private RecyclerView lstTaskComplete;
 
-    public CompleteFragment(List<TasksModel> tasksModelList) {
+
+    public CompleteFragment(List<TasksModel> tasksModelList, IHome.IHomeRepresentationDelegate representationDelegate) {
         this.tasksModelList = tasksModelList;
+        this.representationDelegate = representationDelegate;
     }
 
     @Override
@@ -31,7 +36,7 @@ public class CompleteFragment extends Fragment {
 
         lstTaskComplete = view.findViewById(R.id.lst_task_complete);
         lstTaskComplete.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        lstTaskComplete.setAdapter(new ListTaskCompleteAdapter(tasksModelList, getContext()));
+        lstTaskComplete.setAdapter(new ListTaskCompleteAdapter(tasksModelList, getContext(), representationDelegate));
 
         return view;
     }

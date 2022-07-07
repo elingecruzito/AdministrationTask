@@ -194,7 +194,7 @@ public class HomeViewController extends AbstractViewController implements IHome.
     @Override
     public void setTaskComplete(List<TasksModel> taskComplete) {
         txtTaskComplete.setText(taskComplete.size() + " " + getResources().getString(R.string.lbl_card_name_task));
-        setFragmentTabTask(new CompleteFragment(taskComplete));
+        setFragmentTabTask(new CompleteFragment(taskComplete, representationDelegate));
     }
 
     @Override

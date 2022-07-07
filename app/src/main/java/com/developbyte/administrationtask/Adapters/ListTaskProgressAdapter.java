@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -38,13 +39,13 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
 
     @Override
     public void onBindViewHolder(@NonNull ListTaskProgressAdapter.ViewHolder holder, int position) {
-        holder.iconStatusTask.setBackground(context.getResources().getDrawable(R.mipmap.progress));
-        holder.iconStatusTask.setOnClickListener(new View.OnClickListener() {
+        holder.lyItemTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 representationDelegate.showInfoProject();
             }
         });
+        holder.iconStatusTask.setBackground(context.getResources().getDrawable(R.mipmap.progress));
         holder.txtNameTask.setText(tasksModelList.get(position).getTask());
         holder.txtNameProject.setText(tasksModelList.get(position).getProject());
         holder.txtDateTask.setText(tasksModelList.get(position).getHour());
@@ -57,6 +58,7 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
+        private RelativeLayout lyItemTask;
         private ImageView iconStatusTask;
         private AppCompatTextView txtNameTask;
         private AppCompatTextView txtDateTask;
@@ -64,7 +66,7 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            lyItemTask = itemView.findViewById(R.id.ly_item_task);
             iconStatusTask = itemView.findViewById(R.id.icon_status_task);
             txtNameTask = itemView.findViewById(R.id.txt_name_task);
             txtDateTask = itemView.findViewById(R.id.txt_date_task);
