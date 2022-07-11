@@ -22,6 +22,13 @@ public class TasksModel {
         this.date = date;
     }
 
+    public TasksModel(String task, String hour, String date, int id_project) {
+        this.task = task;
+        this.hour = hour;
+        this.date = date;
+        this.id_project = id_project;
+    }
+
     public TasksModel(int id_task, String task, int id_project, String project, String hour, String date, int status) {
         this.id_task = id_task;
         this.task = task;

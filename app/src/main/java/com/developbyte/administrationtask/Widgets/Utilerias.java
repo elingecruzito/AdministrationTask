@@ -68,7 +68,7 @@ public class Utilerias {
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
-                editText.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()));
+                editText.setText(hourOfDay + ":" + minute);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
     }

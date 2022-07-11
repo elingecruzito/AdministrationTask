@@ -100,6 +100,7 @@ public class InjectionManager {
         infoprojectViewController.setTag(HomeMasterViewController.INFOPROJECT_CONTROLLER);
         infoprojectViewController.setRepresentationDelegate(infoprojectBusinessController);
         infoprojectViewController.setMasterViewController(homeMasterViewController);
+        infoprojectViewController.setUtilerias(utilerias);
 
         infoprojectservice.setiInfoProjectInformationDelegate(infoprojectBusinessController);
         infoprojectservice.setContext(homeMasterViewController);

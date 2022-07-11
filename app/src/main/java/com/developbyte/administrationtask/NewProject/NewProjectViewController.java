@@ -1,8 +1,5 @@
 package com.developbyte.administrationtask.NewProject;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.developbyte.administrationtask.Abstract.AbstractViewController;
 import com.developbyte.administrationtask.Adapters.ListNewTaskAdapter;
-import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
-import com.developbyte.administrationtask.Widgets.RunnableWidget;
+import com.developbyte.administrationtask.Widgets.RunnableWidgetAddItemList;
 import com.developbyte.administrationtask.Widgets.Utilerias;
 import com.developbyte.administrationtask.Widgets.WidgetCreateNewTask;
 
@@ -62,7 +58,7 @@ public class NewProjectViewController extends AbstractViewController implements 
         btnAddNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newTask.showCreateNewTask(listNewTaskAdapter, new RunnableWidget());
+                newTask.showCreateNewTask(listNewTaskAdapter, new RunnableWidgetAddItemList());
             }
         });
 

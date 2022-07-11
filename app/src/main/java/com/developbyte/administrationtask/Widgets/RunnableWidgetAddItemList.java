@@ -3,7 +3,7 @@ package com.developbyte.administrationtask.Widgets;
 import com.developbyte.administrationtask.Adapters.ListNewTaskAdapter;
 import com.developbyte.administrationtask.Model.TasksModel;
 
-public class RunnableWidget implements Runnable{
+public class RunnableWidgetAddItemList implements Runnable{
 
     private ListNewTaskAdapter listNewTaskAdapter;
     private String name;

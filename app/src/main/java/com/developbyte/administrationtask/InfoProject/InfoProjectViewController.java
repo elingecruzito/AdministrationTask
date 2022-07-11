@@ -35,6 +35,9 @@ import com.developbyte.administrationtask.InfoProject.Fragments.ProgressInfoFrag
 import com.developbyte.administrationtask.Model.ProjectModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
+import com.developbyte.administrationtask.Widgets.RunnableWidgetAddItem;
+import com.developbyte.administrationtask.Widgets.Utilerias;
+import com.developbyte.administrationtask.Widgets.WidgetCreateNewTask;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -51,6 +54,7 @@ public class InfoProjectViewController extends AbstractViewController implements
     private int id_project;
 
     private IInfoProject.IInfoProjectRepresentationDelegate representationDelegate;
+    private Utilerias utilerias;
     private AppCompatTextView txtNameProjectInfo;
 
     private Pie pie;
@@ -59,29 +63,18 @@ public class InfoProjectViewController extends AbstractViewController implements
 
     private TabLayout tbTaskInfo;
     private FloatingActionButton btnAddTaskInfo;
+    private WidgetCreateNewTask newTask;
 
     int sizeInfoProgressTask = 0;
     int sizeInfoCompleteTask = 0;
-
-    private AlertDialog.Builder alertDialogAddNewTask;
-    private AlertDialog alertDialog;
-    private View viewAddNewTask;
-    private AppCompatEditText txtNameNewTask;
-    private AppCompatEditText txtDateNewTask;
-    private AppCompatButton btnModalCalendar;
-    private AppCompatEditText txtDateNewHour;
-    private AppCompatButton btnModalClock;
-    private AppCompatButton btnCancelNewTask;
-    private AppCompatButton btnCreateNewTask;
-
-    private Calendar calendar;
-    private SimpleDateFormat dateFormat;
-    private DatePickerDialog datePickerDialog;
-    private TimePickerDialog timePickerDialog;
     
 
     public void setRepresentationDelegate(IInfoProject.IInfoProjectRepresentationDelegate representationDelegate) {
         this.representationDelegate = representationDelegate;
+    }
+
+    public void setUtilerias(Utilerias utilerias) {
+        this.utilerias = utilerias;
     }
 
     @Override
@@ -122,11 +115,11 @@ public class InfoProjectViewController extends AbstractViewController implements
         representationDelegate.getAllProgressTask(id_project);
 
         btnAddTaskInfo = view.findViewById(R.id.btn_add_task_info);
-        this.createViewNewTask();
+        newTask = new WidgetCreateNewTask(getActivity(), utilerias);
         btnAddTaskInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.show();
+                newTask.showCreateNewTask(id_project, new RunnableWidgetAddItem(), representationDelegate);
             }
         });
 
@@ -179,6 +172,11 @@ public class InfoProjectViewController extends AbstractViewController implements
         setFragmentTabTask(new CompleteInfoFragment(completeTask));
     }
 
+    @Override
+    public void setInsertTask(TasksModel task) {
+        representationDelegate.getAllProgressTask(id_project);
+    }
+
     public void setDataChart(){
 
         pie = AnyChart.pie();
@@ -210,80 +208,4 @@ public class InfoProjectViewController extends AbstractViewController implements
                 .commit();
     }
 
-    private void createViewNewTask(){
-
-        alertDialogAddNewTask = new AlertDialog.Builder(getContext());
-        viewAddNewTask = requireActivity().getLayoutInflater().inflate(R.layout.widget_modal_new_task, null);
-        alertDialog = alertDialogAddNewTask.setView(viewAddNewTask).create();
-        this.createDialogs();
-        txtNameNewTask = viewAddNewTask.findViewById(R.id.txt_name_new_task);
-        txtDateNewTask = viewAddNewTask.findViewById(R.id.txt_date_new_task);
-        btnModalCalendar = viewAddNewTask.findViewById(R.id.btn_modal_calendar);
-        btnModalCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.show();
-            }
-        });
-        txtDateNewHour = viewAddNewTask.findViewById(R.id.txt_date_new_hour);
-        btnModalClock = viewAddNewTask.findViewById(R.id.btn_modal_clock);
-        btnModalClock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timePickerDialog.show();
-            }
-        });
-        btnCancelNewTask = viewAddNewTask.findViewById(R.id.btn_cancel_new_task);
-        btnCancelNewTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearModalNewTask();
-                alertDialog.dismiss();
-            }
-        });
-        btnCreateNewTask = viewAddNewTask.findViewById(R.id.btn_create_new_task);
-        btnCreateNewTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                listNewTaskAdapter.setTasksModel(new TasksModel(
-//                        txtNameNewTask.getText().toString(),
-//                        txtDateNewHour.getText().toString(),
-//                        txtDateNewTask.getText().toString()
-//                ));
-                clearModalNewTask();
-                alertDialog.dismiss();
-            }
-        });
-    }
-
-    private void clearModalNewTask(){
-        txtNameNewTask.setText("");
-        txtDateNewTask.setText("");
-        txtDateNewHour.setText("");
-    }
-
-
-    private void createDialogs(){
-        calendar = Calendar.getInstance();
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        datePickerDialog = new DatePickerDialog(getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, day);
-                txtDateNewTask.setText(dateFormat.format(calendar.getTime()));
-            }
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(calendar.DAY_OF_MONTH));
-
-        timePickerDialog = new TimePickerDialog(getContext(), R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-                txtDateNewHour.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()));
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
-    }
 }

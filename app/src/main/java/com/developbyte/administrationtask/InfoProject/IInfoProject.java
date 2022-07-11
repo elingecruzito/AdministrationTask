@@ -22,6 +22,7 @@ public interface IInfoProject {
         void setDataProject(ProjectModel project);
         void setAllProgressTask(List<TasksModel> progressTask);
         void setAllCompleteTask(List<TasksModel> completeTask);
+        void setInsertTask(TasksModel task);
     }
 
     //Comunica de Service a BusinessComtroller
@@ -29,6 +30,7 @@ public interface IInfoProject {
         void setDataProject(ProjectModel project);
         void setAllProgressTask(List<TasksModel> progressTask);
         void setAllCompleteTask(List<TasksModel> completeTask);
+        void setInsertTask(TasksModel task);
     }
 
     //Comunica de BusinessController a Service
@@ -36,6 +38,7 @@ public interface IInfoProject {
         void getDataProject(int id);
         void getAllProgressTask(int id);
         void getAllCompleteTask(int id);
+        void createNewTask(TasksModel tasksModel);
     }
 
     //Comunica de ViewController a Businnes
@@ -43,5 +46,6 @@ public interface IInfoProject {
         void getDataProject(int id);
         void getAllProgressTask(int idProject);
         void getAllCompleteTask(int idProject);
+        void createNewTask(TasksModel tasksModel);
     }
 }

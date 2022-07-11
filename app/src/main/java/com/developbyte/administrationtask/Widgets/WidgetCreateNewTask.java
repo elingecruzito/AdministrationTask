@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.developbyte.administrationtask.Adapters.ListNewTaskAdapter;
+import com.developbyte.administrationtask.InfoProject.IInfoProject;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
 
@@ -82,7 +83,7 @@ public class WidgetCreateNewTask {
         txtDateNewHour.setText("");
     }
 
-    public void showCreateNewTask(ListNewTaskAdapter listNewTaskAdapter, RunnableWidget runnable){
+    public void showCreateNewTask(ListNewTaskAdapter listNewTaskAdapter, RunnableWidgetAddItemList runnable){
 
         btnCreateNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +95,25 @@ public class WidgetCreateNewTask {
                 runnable.setHour(txtDateNewHour.getText().toString());
 
                 runnable.run();
+                clearModalNewTask();
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
+    public void showCreateNewTask(int id_project, RunnableWidgetAddItem addItem, IInfoProject.IInfoProjectRepresentationDelegate representationDelegate){
+        btnCreateNewTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addItem.setRepresentationDelegate(representationDelegate);
+                addItem.setTasksModel(new TasksModel(
+                        txtNameNewTask.getText().toString(),
+                        txtDateNewHour.getText().toString(),
+                        txtDateNewTask.getText().toString(),
+                        id_project
+                ));
+                addItem.run();
                 clearModalNewTask();
                 alertDialog.dismiss();
             }

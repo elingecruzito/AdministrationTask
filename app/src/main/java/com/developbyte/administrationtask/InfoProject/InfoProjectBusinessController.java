@@ -55,6 +55,11 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     }
 
     @Override
+    public void createNewTask(TasksModel tasksModel) {
+        informationHandler.createNewTask(tasksModel);
+    }
+
+    @Override
     public void setDataProject(ProjectModel project) {
         representationHandler.setDataProject(project);
     }
@@ -67,5 +72,10 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     @Override
     public void setAllCompleteTask(List<TasksModel> completeTask) {
         representationHandler.setAllCompleteTask(completeTask);
+    }
+
+    @Override
+    public void setInsertTask(TasksModel task) {
+        representationHandler.setInsertTask(task);
     }
 }

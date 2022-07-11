@@ -1,6 +1,7 @@
 package com.developbyte.administrationtask.Abstract;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,12 +22,23 @@ public abstract class AbstractService
     public Cursor cursor;
 
     public List<TasksModel> modelList;
+    public ContentValues values;
+
+    private Long idRow;
 
     private void initListModel(){
         if(modelList == null){
             modelList = new ArrayList<>();
         }else if(modelList.size() > 0){
             modelList.clear();
+        }
+    }
+
+    private void initValues(){
+        if(values == null){
+            values = new ContentValues();
+        }else{
+            values.clear();
         }
     }
 
@@ -58,5 +70,28 @@ public abstract class AbstractService
         cursor.close();
         db.close();
         dbHelper.close();
+    }
+
+    public TasksModel createTask(TasksModel tasksModel, Context context){
+
+        dbHelper = new TaskAdministrationDBHelper(context);
+        db = dbHelper.getReadableDatabase();
+        initValues();
+
+        values.put(TaskEntry.COLUMN_NAME_TASK, tasksModel.getTask());
+        values.put(TaskEntry.COLUMN_NAME_DATE, tasksModel.getDate());
+        values.put(TaskEntry.COLUMN_NAME_HOUR, tasksModel.getHour());
+        values.put(TaskEntry.COLUMN_NAME_STATUS, TasksModel.STATUS_IN_PROGRESS);
+        values.put(TaskEntry.COLUMN_NAME_ID_PROJECT, tasksModel.getId_project());
+
+        idRow = db.insert(
+            TaskEntry.TABLE_NAME,
+                null,
+            values
+        );
+
+        tasksModel.setId_task(idRow.intValue());
+
+        return tasksModel;
     }
 }
