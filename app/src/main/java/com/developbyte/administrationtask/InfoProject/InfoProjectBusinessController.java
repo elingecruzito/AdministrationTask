@@ -60,6 +60,11 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     }
 
     @Override
+    public void updateStatusTask(int idtask) {
+        informationHandler.updateStatusTask(idtask);
+    }
+
+    @Override
     public void setDataProject(ProjectModel project) {
         representationHandler.setDataProject(project);
     }
@@ -77,5 +82,10 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     @Override
     public void setInsertTask(TasksModel task) {
         representationHandler.setInsertTask(task);
+    }
+
+    @Override
+    public void updateStatusTaskResult(boolean ready) {
+        representationHandler.updateStatusTaskResult(ready);
     }
 }

@@ -25,6 +25,7 @@ public abstract class AbstractService
     public ContentValues values;
 
     private Long idRow;
+    public int countUpdate;
 
     private void initListModel(){
         if(modelList == null){
@@ -92,6 +93,28 @@ public abstract class AbstractService
 
         tasksModel.setId_task(idRow.intValue());
 
+        db.close();
+        dbHelper.close();
+
         return tasksModel;
+    }
+
+    public void updateStatusTask(int idTask, Context context){
+        dbHelper = new TaskAdministrationDBHelper(context);
+        db = dbHelper.getReadableDatabase();
+        initValues();
+        countUpdate = 0;
+
+        values.put(TaskEntry.COLUMN_NAME_STATUS, TasksModel.STATUS_COMPLETE);
+
+        countUpdate = db.update(
+                TaskEntry.TABLE_NAME,
+                values,
+                TaskEntry.COLUMN_NAME_ID + " = ? ",
+                new String[]{ String.valueOf(idTask) }
+        );
+
+        db.close();
+        dbHelper.close();
     }
 }

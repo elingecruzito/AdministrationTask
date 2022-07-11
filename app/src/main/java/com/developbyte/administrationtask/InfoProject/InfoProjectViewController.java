@@ -110,9 +110,7 @@ public class InfoProjectViewController extends AbstractViewController implements
 
             }
         });
-        tbTaskInfo.selectTab(tbTaskInfo.getTabAt(0));
-        representationDelegate.getAllCompleteTask(id_project);
-        representationDelegate.getAllProgressTask(id_project);
+        refreshFragment();
 
         btnAddTaskInfo = view.findViewById(R.id.btn_add_task_info);
         newTask = new WidgetCreateNewTask(getActivity(), utilerias);
@@ -162,7 +160,7 @@ public class InfoProjectViewController extends AbstractViewController implements
     public void setAllProgressTask(List<TasksModel> progressTask) {
         sizeInfoProgressTask = progressTask.size();
         setDataChart();
-        setFragmentTabTask(new ProgressInfoFragment(progressTask));
+        setFragmentTabTask(new ProgressInfoFragment(progressTask, representationDelegate));
     }
 
     @Override
@@ -174,6 +172,19 @@ public class InfoProjectViewController extends AbstractViewController implements
 
     @Override
     public void setInsertTask(TasksModel task) {
+        refreshFragment();
+    }
+
+    @Override
+    public void updateStatusTaskResult(boolean ready) {
+        if(ready){
+            refreshFragment();
+        }
+    }
+
+    private void refreshFragment(){
+        tbTaskInfo.selectTab(tbTaskInfo.getTabAt(0));
+        representationDelegate.getAllCompleteTask(id_project);
         representationDelegate.getAllProgressTask(id_project);
     }
 

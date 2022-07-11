@@ -92,4 +92,10 @@ public class InfoProjectService extends AbstractService implements IInfoProject.
 
         iInfoProjectInformationDelegate.setInsertTask(tasksModel);
     }
+
+    @Override
+    public void updateStatusTask(int idtask) {
+        updateStatusTask(idtask, context);
+        iInfoProjectInformationDelegate.updateStatusTaskResult(countUpdate > 0 ? true : false);
+    }
 }

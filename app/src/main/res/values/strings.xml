@@ -31,4 +31,6 @@
 
     <string name="lbl_chart_complete">Complete</string>
     <string name="lbl_chart_progress">Progress</string>
+
+    <string name="lbl_alert_confirmation_update_task">Did you complete this task?</string>
 </resources>

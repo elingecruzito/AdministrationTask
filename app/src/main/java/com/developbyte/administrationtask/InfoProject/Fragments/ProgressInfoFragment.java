@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.developbyte.administrationtask.Adapters.ListInfoTaskProgressAdapter;
+import com.developbyte.administrationtask.InfoProject.IInfoProject;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
 
@@ -24,9 +25,12 @@ public class ProgressInfoFragment extends Fragment {
     private View view;
     private RecyclerView lstInfoProgressTask;
     private List<TasksModel> tasksModelList;
+    private IInfoProject.IInfoProjectRepresentationDelegate representationDelegate;
 
-    public ProgressInfoFragment(List<TasksModel> tasksModelList) {
+
+    public ProgressInfoFragment(List<TasksModel> tasksModelList, IInfoProject.IInfoProjectRepresentationDelegate representationDelegate) {
         this.tasksModelList = tasksModelList;
+        this.representationDelegate = representationDelegate;
     }
 
     @Nullable
@@ -37,7 +41,7 @@ public class ProgressInfoFragment extends Fragment {
 
         lstInfoProgressTask = view.findViewById(R.id.lst_info_progress_task);
         lstInfoProgressTask.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        lstInfoProgressTask.setAdapter(new ListInfoTaskProgressAdapter(tasksModelList, getContext()));
+        lstInfoProgressTask.setAdapter(new ListInfoTaskProgressAdapter(tasksModelList, getContext(), representationDelegate));
 
         return view;
     }
