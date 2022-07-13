@@ -65,28 +65,8 @@ public class ListInfoTaskProgressSwiper extends ItemTouchHelper.Callback {
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
-            itemView = viewHolder.itemView;
-            if (dX > 0) {
-                icon = utilerias.drawableToBitmap(ContextCompat.getDrawable(context, R.drawable.ic_baseline_post_add));
-                p.setColor(context.getResources().getColor(R.color.blue_background));
-                c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
-                        (float) itemView.getBottom(), p);
-                c.drawBitmap(icon,
-                        (float) itemView.getLeft() + utilerias.convertDpToPx(16, context),
-                        (float) itemView.getTop() + ((float) itemView.getBottom() - (float) itemView.getTop() - icon.getHeight())/2,
-                        p);
-            }else {
-                icon = utilerias.drawableToBitmap(ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_white));
-                p.setColor(context.getResources().getColor(R.color.btn_color_red));
-                c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
-                        (float) itemView.getRight(), (float) itemView.getBottom(), p);
-                c.drawBitmap(icon,
-                        (float) itemView.getRight() - utilerias.convertDpToPx(16, context) - icon.getWidth(),
-                        (float) itemView.getTop() + ((float) itemView.getBottom() - (float) itemView.getTop() - icon.getHeight())/2,
-                        p);
-            }
-            viewHolder.itemView.setAlpha(ALPHA_FULL - Math.abs(dX) / (float) viewHolder.itemView.getWidth());
-            viewHolder.itemView.setTranslationX(dX);
+
+            new SwiperChildDraw(c, viewHolder, dX, utilerias, context);
 
         }else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);

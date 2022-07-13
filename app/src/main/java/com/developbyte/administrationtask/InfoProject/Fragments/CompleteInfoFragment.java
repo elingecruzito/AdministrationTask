@@ -47,8 +47,7 @@ public class CompleteInfoFragment extends Fragment {
         lstInfoCompletTask.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstInfoCompletTask.setAdapter(new ListInfoTaskCompleteAdapter(tasksModelList, getContext()));
 
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new ListInfoTaskCompleteSwiper(getContext(), tasksModelList, representationDelegate, utilerias));
-        touchHelper.attachToRecyclerView(lstInfoCompletTask);
+        new ItemTouchHelper(new ListInfoTaskCompleteSwiper(getContext(), tasksModelList, representationDelegate, utilerias)).attachToRecyclerView(lstInfoCompletTask);
 
         return view;
     }

@@ -45,8 +45,7 @@ public class ProgressFragment extends Fragment{
         listTaskProgressAdapter = new ListHomeTaskProgressAdapter(tasksModelList, getContext(), representationDelegate);
         lstTaskProgress.setAdapter(listTaskProgressAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ListHomeTaskProgressSwiper(getContext(), tasksModelList, representationDelegate, utilerias));
-        itemTouchHelper.attachToRecyclerView(lstTaskProgress);
+        new ItemTouchHelper(new ListHomeTaskProgressSwiper(getContext(), tasksModelList, representationDelegate, utilerias)).attachToRecyclerView(lstTaskProgress);
 
         return view;
     }

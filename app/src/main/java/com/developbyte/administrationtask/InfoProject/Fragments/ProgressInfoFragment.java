@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.developbyte.administrationtask.Adapters.ListInfoTaskProgressAdapter;
 import com.developbyte.administrationtask.Adapters.Swipers.ListInfoTaskProgressSwiper;
+import com.developbyte.administrationtask.Home.IHome;
 import com.developbyte.administrationtask.InfoProject.IInfoProject;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
@@ -51,8 +52,7 @@ public class ProgressInfoFragment extends Fragment {
         lstInfoProgressTask.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstInfoProgressTask.setAdapter(new ListInfoTaskProgressAdapter(tasksModelList, getContext()));
 
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new ListInfoTaskProgressSwiper(getContext(), tasksModelList, representationDelegate, utilerias));
-        touchHelper.attachToRecyclerView(lstInfoProgressTask);
+        new ItemTouchHelper(new ListInfoTaskProgressSwiper(getContext(), tasksModelList, representationDelegate, utilerias)).attachToRecyclerView(lstInfoProgressTask);
 
         return view;
     }
