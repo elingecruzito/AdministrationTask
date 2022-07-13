@@ -26,6 +26,7 @@ public abstract class AbstractService
 
     private Long idRow;
     public int countUpdate;
+    public int countDeletes;
 
     private void initListModel(){
         if(modelList == null){
@@ -111,6 +112,21 @@ public abstract class AbstractService
                 TaskEntry.TABLE_NAME,
                 values,
                 TaskEntry.COLUMN_NAME_ID + " = ? ",
+                new String[]{ String.valueOf(idTask) }
+        );
+
+        db.close();
+        dbHelper.close();
+    }
+
+    public void deleteTask(int idTask, Context context){
+        dbHelper = new TaskAdministrationDBHelper(context);
+        db = dbHelper.getReadableDatabase();
+        initValues();
+
+        countDeletes = db.delete(
+            TaskEntry.TABLE_NAME,
+                TaskEntry.COLUMN_NAME_ID + " = ?",
                 new String[]{ String.valueOf(idTask) }
         );
 

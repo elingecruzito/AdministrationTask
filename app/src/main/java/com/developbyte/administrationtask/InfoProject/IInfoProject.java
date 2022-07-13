@@ -24,6 +24,7 @@ public interface IInfoProject {
         void setAllCompleteTask(List<TasksModel> completeTask);
         void setInsertTask(TasksModel task);
         void updateStatusTaskResult(boolean ready);
+        void deleteTask(boolean ready);
     }
 
     //Comunica de Service a BusinessComtroller
@@ -33,6 +34,7 @@ public interface IInfoProject {
         void setAllCompleteTask(List<TasksModel> completeTask);
         void setInsertTask(TasksModel task);
         void updateStatusTaskResult(boolean ready);
+        void deleteTask(boolean ready);
     }
 
     //Comunica de BusinessController a Service
@@ -42,6 +44,7 @@ public interface IInfoProject {
         void getAllCompleteTask(int id);
         void createNewTask(TasksModel tasksModel);
         void updateStatusTask(int idtask);
+        void deleteTask(int idtask);
     }
 
     //Comunica de ViewController a Businnes
@@ -51,5 +54,6 @@ public interface IInfoProject {
         void getAllCompleteTask(int idProject);
         void createNewTask(TasksModel tasksModel);
         void updateStatusTask(int idtask);
+        void deleteTask(int idtask);
     }
 }

@@ -3,6 +3,8 @@ package com.developbyte.administrationtask.InfoProject;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -159,14 +161,12 @@ public class InfoProjectViewController extends AbstractViewController implements
     @Override
     public void setAllProgressTask(List<TasksModel> progressTask) {
         sizeInfoProgressTask = progressTask.size();
-        setDataChart();
-        setFragmentTabTask(new ProgressInfoFragment(progressTask, representationDelegate));
+        setFragmentTabTask(new ProgressInfoFragment(progressTask, representationDelegate, utilerias));
     }
 
     @Override
     public void setAllCompleteTask(List<TasksModel> completeTask) {
         sizeInfoCompleteTask = completeTask.size();
-        setDataChart();
         setFragmentTabTask(new CompleteInfoFragment(completeTask));
     }
 
@@ -182,10 +182,22 @@ public class InfoProjectViewController extends AbstractViewController implements
         }
     }
 
+    @Override
+    public void deleteTask(boolean ready) {
+        if(ready){
+            refreshFragment();
+        }
+    }
+
     private void refreshFragment(){
-        tbTaskInfo.selectTab(tbTaskInfo.getTabAt(0));
-        representationDelegate.getAllCompleteTask(id_project);
-        representationDelegate.getAllProgressTask(id_project);
+        if(tbTaskInfo.getSelectedTabPosition() == 0){
+            representationDelegate.getAllCompleteTask(id_project);
+            representationDelegate.getAllProgressTask(id_project);
+        }else{
+            representationDelegate.getAllProgressTask(id_project);
+            representationDelegate.getAllCompleteTask(id_project);
+        }
+        setDataChart();
     }
 
     public void setDataChart(){
@@ -198,11 +210,11 @@ public class InfoProjectViewController extends AbstractViewController implements
         }
 
         data.add(new ValueDataEntry(
-                getResources().getString(R.string.lbl_chart_complete),
+                sizeInfoCompleteTask + " " + getResources().getString(R.string.lbl_chart_complete),
                 sizeInfoCompleteTask
         ));
         data.add(new ValueDataEntry(
-                getResources().getString(R.string.lbl_chart_progress),
+                sizeInfoProgressTask + " " + getResources().getString(R.string.lbl_chart_progress),
                 sizeInfoProgressTask
         ));
 

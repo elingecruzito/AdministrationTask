@@ -65,6 +65,11 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     }
 
     @Override
+    public void deleteTask(int idtask) {
+        informationHandler.deleteTask(idtask);
+    }
+
+    @Override
     public void setDataProject(ProjectModel project) {
         representationHandler.setDataProject(project);
     }
@@ -87,5 +92,10 @@ public class InfoProjectBusinessController extends AbstractBusinessController
     @Override
     public void updateStatusTaskResult(boolean ready) {
         representationHandler.updateStatusTaskResult(ready);
+    }
+
+    @Override
+    public void deleteTask(boolean ready) {
+        representationHandler.deleteTask(ready);
     }
 }

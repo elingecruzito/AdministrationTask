@@ -6,6 +6,11 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -38,6 +43,9 @@ public class Utilerias {
     private AppCompatTextView lblMessageModal;
     private AppCompatButton btnCancelModal;
     private AppCompatButton btnConfirmationModal;
+
+    private Bitmap icon;
+    private Canvas canvas;
 
 
     public Utilerias() {
@@ -126,6 +134,34 @@ public class Utilerias {
             sb.append(DATA.charAt(RANDOM.nextInt(DATA.length())));
         }
         return sb.toString();
+    }
+
+    public Bitmap drawableToBitmap (Drawable drawable) {
+        icon = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            icon = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            icon = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        canvas = new Canvas(icon);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return icon;
+
+    }
+
+    public int convertDpToPx(int dp, Context context) {
+        return Math.round(dp * (context.getResources().getDisplayMetrics().xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 

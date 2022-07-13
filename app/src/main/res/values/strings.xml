@@ -29,8 +29,8 @@
     <string name="lbl_field_hour">Task Hour</string>
     <string name="btn_create_task">Create task</string>
 
-    <string name="lbl_chart_complete">Complete</string>
-    <string name="lbl_chart_progress">Progress</string>
+    <string name="lbl_chart_complete">complete</string>
+    <string name="lbl_chart_progress">in progress</string>
 
     <string name="lbl_alert_confirmation_update_task">Did you complete this task?</string>
 </resources>
