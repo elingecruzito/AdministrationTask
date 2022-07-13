@@ -42,8 +42,7 @@ public class ProgressFragment extends Fragment{
 
         lstTaskProgress = view.findViewById(R.id.lst_task_progress);
         lstTaskProgress.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        listTaskProgressAdapter = new ListHomeTaskProgressAdapter(tasksModelList, getContext(), representationDelegate);
-        lstTaskProgress.setAdapter(listTaskProgressAdapter);
+        lstTaskProgress.setAdapter(new ListHomeTaskProgressAdapter(tasksModelList, getContext(), representationDelegate));
 
         new ItemTouchHelper(new ListHomeTaskProgressSwiper(getContext(), tasksModelList, representationDelegate, utilerias)).attachToRecyclerView(lstTaskProgress);
 
