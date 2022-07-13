@@ -167,7 +167,7 @@ public class InfoProjectViewController extends AbstractViewController implements
     @Override
     public void setAllCompleteTask(List<TasksModel> completeTask) {
         sizeInfoCompleteTask = completeTask.size();
-        setFragmentTabTask(new CompleteInfoFragment(completeTask));
+        setFragmentTabTask(new CompleteInfoFragment(completeTask, representationDelegate, utilerias));
     }
 
     @Override
