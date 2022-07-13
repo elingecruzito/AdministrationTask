@@ -17,12 +17,12 @@ import com.developbyte.administrationtask.R;
 
 import java.util.List;
 
-public class ListTaskCompleteAdapter extends RecyclerView.Adapter<ListTaskCompleteAdapter.ViewHolder>{
+public class ListHomeTaskCompleteAdapter extends RecyclerView.Adapter<ListHomeTaskCompleteAdapter.ViewHolder>{
     private List<TasksModel> tasksModelList;
     private Context context;
     private IHome.IHomeRepresentationDelegate representationDelegate;
 
-    public ListTaskCompleteAdapter(List<TasksModel> tasksModelList, Context context, IHome.IHomeRepresentationDelegate representationDelegate) {
+    public ListHomeTaskCompleteAdapter(List<TasksModel> tasksModelList, Context context, IHome.IHomeRepresentationDelegate representationDelegate) {
         this.tasksModelList = tasksModelList;
         this.context = context;
         this.representationDelegate = representationDelegate;
@@ -30,14 +30,14 @@ public class ListTaskCompleteAdapter extends RecyclerView.Adapter<ListTaskComple
 
     @NonNull
     @Override
-    public ListTaskCompleteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListHomeTaskCompleteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.widget_task_list, parent, false);
-        return new ListTaskCompleteAdapter.ViewHolder(itemView);
+        return new ListHomeTaskCompleteAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListTaskCompleteAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListHomeTaskCompleteAdapter.ViewHolder holder, int position) {
         holder.lyItemTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
