@@ -106,4 +106,16 @@ public class HomeService extends AbstractService implements IHome.IHomeInformati
         iHomeInformationDelegate.setTaskComplete(modelList);
     }
 
+    @Override
+    public void updateStatusTask(int idTask) {
+        updateStatusTask(idTask, context);
+        iHomeInformationDelegate.updateStatusTaskResult(countUpdate > 0 ? true : false);
+    }
+
+    @Override
+    public void deleteTask(int idTask) {
+        deleteTask(idTask, context);
+        iHomeInformationDelegate.deleteTaskResult(countDeletes > 0 ? true : false);
+    }
+
 }

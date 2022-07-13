@@ -42,6 +42,7 @@ public class InjectionManager {
         homeViewController.setTag(HomeMasterViewController.HOME_CONTROLLER);
         homeViewController.setRepresentationDelegate(homeBusinessController);
         homeViewController.setMasterViewController(homeMasterViewController);
+        homeViewController.setUtilerias(utilerias);
 
         homeservice.setInformationDelegate(homeBusinessController);
         homeservice.setContext(homeMasterViewController);

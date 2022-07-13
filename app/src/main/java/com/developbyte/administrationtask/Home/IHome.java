@@ -27,18 +27,24 @@ public interface IHome {
         void setTaskInProgress(List<TasksModel> taskInProgress);
         void setTaskComplete(List<TasksModel> taskComplete);
         void setMonthList(List<MonthsModel> monthList);
+        void updateStatusTaskResult(boolean ready);
+        void deleteTaskResult(boolean ready);
     }
 
     //Comunica de Service a BusinessComtroller
     interface IHomeInformationDelegate{
         void setTaskInProgress(List<TasksModel> taskInProgress);
         void setTaskComplete(List<TasksModel> taskComplete);
+        void updateStatusTaskResult(boolean ready);
+        void deleteTaskResult(boolean ready);
     }
 
     //Comunica de BusinessController a Service
     interface IHomeInformationHandler{
         void getTaskInProgress(String date);
         void getTaskComplete(String date);
+        void updateStatusTask(int idTask);
+        void deleteTask(int idTask);
     }
 
     //Comunica de ViewController a Businnes
@@ -50,6 +56,8 @@ public interface IHome {
         void getTaskInProgress(String date);
         void getTaskComplete(String date);
         void getMonthsList();
+        void updateStatusTask(int idTask);
+        void deleteTask(int idTask);
         
     }
 }

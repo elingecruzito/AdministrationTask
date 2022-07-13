@@ -24,6 +24,7 @@ import com.developbyte.administrationtask.Model.DaysMountModel;
 import com.developbyte.administrationtask.Model.MonthsModel;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
+import com.developbyte.administrationtask.Widgets.Utilerias;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -35,6 +36,7 @@ import java.util.List;
 public class HomeViewController extends AbstractViewController implements IHome.IHomeRepresentationHandler {
 
     private IHome.IHomeRepresentationDelegate representationDelegate;
+    private Utilerias utilerias;
 
     private AppCompatTextView txtDayToday;
     private AppCompatButton btnCalendar;
@@ -57,6 +59,10 @@ public class HomeViewController extends AbstractViewController implements IHome.
 
     public void setRepresentationDelegate(IHome.IHomeRepresentationDelegate representationDelegate) {
         this.representationDelegate = representationDelegate;
+    }
+
+    public void setUtilerias(Utilerias utilerias) {
+        this.utilerias = utilerias;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -113,9 +119,7 @@ public class HomeViewController extends AbstractViewController implements IHome.
 
             }
         });
-        tbTask.selectTab(tbTask.getTabAt(0));
-        representationDelegate.getTaskComplete(dateSelected);
-        representationDelegate.getTaskInProgress(dateSelected);
+        reloadData();
 
         btnAddTask = view.findViewById(R.id.btn_new_project);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -177,17 +181,13 @@ public class HomeViewController extends AbstractViewController implements IHome.
         btnCalendar.setText(DateFormatSymbols.getInstance().getMonths()[currentMonth - 1]);
         lstDaysMount.scrollToPosition(listDaysMountAdapter.getIndexToday());
 
-        if(tbTask.getSelectedTabPosition() == 0){
-            representationDelegate.getTaskInProgress(dateSelected);
-        }else{
-            representationDelegate.getTaskComplete(dateSelected);
-        }
+        reloadData();
     }
 
     @Override
     public void setTaskInProgress(List<TasksModel> taskInProgress) {
         txtTaskProgress.setText(taskInProgress.size() + " " + getResources().getString(R.string.lbl_card_name_task));
-        setFragmentTabTask(new ProgressFragment(taskInProgress, representationDelegate));
+        setFragmentTabTask(new ProgressFragment(taskInProgress, representationDelegate, utilerias));
 
     }
 
@@ -204,6 +204,30 @@ public class HomeViewController extends AbstractViewController implements IHome.
         listMonthsAdapeter = new ModalListMonthsAdapeter(monthList, getContext());
         lstModalMonths.setAdapter(listMonthsAdapeter);
         lstModalMonths.scrollToPosition(listMonthsAdapeter.getIndexSelected() - 2 );
+    }
+
+    @Override
+    public void updateStatusTaskResult(boolean ready) {
+        if(ready){
+            reloadData();
+        }
+    }
+
+    @Override
+    public void deleteTaskResult(boolean ready) {
+        if(ready){
+            reloadData();
+        }
+    }
+
+    private void reloadData(){
+        if(tbTask.getSelectedTabPosition() == 0){
+            representationDelegate.getTaskComplete(dateSelected);
+            representationDelegate.getTaskInProgress(dateSelected);
+        }else{
+            representationDelegate.getTaskInProgress(dateSelected);
+            representationDelegate.getTaskComplete(dateSelected);
+        }
     }
 
 

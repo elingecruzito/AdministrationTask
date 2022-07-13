@@ -141,6 +141,16 @@ public class HomeBusinessController extends AbstractBusinessController
         representationHandler.setMonthList(monthsModelList);
     }
 
+    @Override
+    public void updateStatusTask(int idTask) {
+        informationHandler.updateStatusTask(idTask);
+    }
+
+    @Override
+    public void deleteTask(int idTask) {
+        informationHandler.deleteTask(idTask);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void setTaskInProgress(List<TasksModel> taskInProgress) {
@@ -150,5 +160,15 @@ public class HomeBusinessController extends AbstractBusinessController
     @Override
     public void setTaskComplete(List<TasksModel> taskComplete) {
         representationHandler.setTaskComplete(taskComplete);
+    }
+
+    @Override
+    public void updateStatusTaskResult(boolean ready) {
+        representationHandler.updateStatusTaskResult(ready);
+    }
+
+    @Override
+    public void deleteTaskResult(boolean ready) {
+        representationHandler.deleteTaskResult(ready);
     }
 }

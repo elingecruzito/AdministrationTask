@@ -17,13 +17,13 @@ import com.developbyte.administrationtask.R;
 
 import java.util.List;
 
-public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgressAdapter.ViewHolder>{
+public class ListHomeTaskProgressAdapter extends RecyclerView.Adapter<ListHomeTaskProgressAdapter.ViewHolder>{
 
     private List<TasksModel> tasksModelList;
     private Context context;
     private IHome.IHomeRepresentationDelegate representationDelegate;
 
-    public ListTaskProgressAdapter(List<TasksModel> tasksModelList, Context context, IHome.IHomeRepresentationDelegate representationDelegate) {
+    public ListHomeTaskProgressAdapter(List<TasksModel> tasksModelList, Context context, IHome.IHomeRepresentationDelegate representationDelegate) {
         this.tasksModelList = tasksModelList;
         this.context = context;
         this.representationDelegate = representationDelegate;
@@ -31,14 +31,14 @@ public class ListTaskProgressAdapter extends RecyclerView.Adapter<ListTaskProgre
 
     @NonNull
     @Override
-    public ListTaskProgressAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListHomeTaskProgressAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.widget_task_list, parent, false);
-        return new ListTaskProgressAdapter.ViewHolder(itemView);
+        return new ListHomeTaskProgressAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListTaskProgressAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListHomeTaskProgressAdapter.ViewHolder holder, int position) {
         holder.lyItemTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
