@@ -31,11 +31,6 @@ public class ListInfoTaskProgressSwiper extends ItemTouchHelper.Callback {
     private IInfoProject.IInfoProjectRepresentationDelegate representationDelegate;
     private Utilerias utilerias;
 
-    private Bitmap icon;
-    private View itemView;
-    private static final Paint p = new Paint();
-    public static final float ALPHA_FULL = 1.0f;
-
     public ListInfoTaskProgressSwiper(Context context, List<TasksModel> tasksModelList, IInfoProject.IInfoProjectRepresentationDelegate representationDelegate, Utilerias utilerias) {
         this.context = context;
         this.tasksModelList = tasksModelList;

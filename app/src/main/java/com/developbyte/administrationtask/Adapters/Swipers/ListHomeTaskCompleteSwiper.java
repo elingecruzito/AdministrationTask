@@ -26,11 +26,6 @@ public class ListHomeTaskCompleteSwiper extends ItemTouchHelper.Callback {
     private IHome.IHomeRepresentationDelegate representationDelegate;
     private Utilerias utilerias;
 
-    private Bitmap icon;
-    private View itemView;
-    private static final Paint p = new Paint();
-    public static final float ALPHA_FULL = 1.0f;
-
     public ListHomeTaskCompleteSwiper(Context context, List<TasksModel> tasksModelList, IHome.IHomeRepresentationDelegate representationDelegate, Utilerias utilerias) {
         this.context = context;
         this.tasksModelList = tasksModelList;
