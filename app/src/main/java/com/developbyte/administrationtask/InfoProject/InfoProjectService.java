@@ -69,7 +69,9 @@ public class InfoProjectService extends AbstractService implements IInfoProject.
     @Override
     public void getAllProgressTask(int id) {
         loadData(
-                RelationProjectTask.QUERY_RELATION + " AND " + TaskEntry.COLUMN_NAME_STATUS + " = ?" + " AND " + TaskEntry.TABLE_NAME + "." +TaskEntry.COLUMN_NAME_ID_PROJECT + " = ?",
+                RelationProjectTask.QUERY_RELATION
+                        + " AND " + TaskEntry.COLUMN_NAME_STATUS + " = ?"
+                        + " AND " + TaskEntry.TABLE_NAME + "." +TaskEntry.COLUMN_NAME_ID_PROJECT + " = ? ORDER BY " + TaskEntry.COLUMN_NAME_DATE + " DESC",
                 new String[]{String.valueOf(TasksModel.STATUS_IN_PROGRESS), String.valueOf(id)},
                 context
         );
@@ -79,7 +81,9 @@ public class InfoProjectService extends AbstractService implements IInfoProject.
     @Override
     public void getAllCompleteTask(int id) {
         loadData(
-                RelationProjectTask.QUERY_RELATION + " AND " + TaskEntry.COLUMN_NAME_STATUS + " = ?" + " AND " + TaskEntry.TABLE_NAME + "." +TaskEntry.COLUMN_NAME_ID_PROJECT + " = ?",
+                RelationProjectTask.QUERY_RELATION
+                        + " AND " + TaskEntry.COLUMN_NAME_STATUS + " = ?"
+                        + " AND " + TaskEntry.TABLE_NAME + "." +TaskEntry.COLUMN_NAME_ID_PROJECT + " = ? ORDER BY " + TaskEntry.COLUMN_NAME_DATE + " DESC",
                 new String[]{String.valueOf(TasksModel.STATUS_COMPLETE), String.valueOf(id)},
                 context
         );
