@@ -13,13 +13,16 @@ import com.developbyte.administrationtask.Adapters.ListNewTaskAdapter;
 import com.developbyte.administrationtask.InfoProject.IInfoProject;
 import com.developbyte.administrationtask.Model.TasksModel;
 import com.developbyte.administrationtask.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class WidgetCreateNewTask {
     private Activity activity;
     private Utilerias utilerias;
 
-    private AlertDialog.Builder alertDialogAddNewTask;
-    private AlertDialog alertDialog;
+    //private AlertDialog.Builder alertDialogAddNewTask;
+    //private AlertDialog alertDialog;
+    private BottomSheetDialog alertDialog;
     private View viewAddNewTask;
     private AppCompatEditText txtNameNewTask;
     private AppCompatEditText txtDateNewTask;
@@ -39,8 +42,8 @@ public class WidgetCreateNewTask {
     }
 
     private void init(){
-        alertDialogAddNewTask = new AlertDialog.Builder(activity);
-
+        //alertDialogAddNewTask = new AlertDialog.Builder(activity);
+        alertDialog = new BottomSheetDialog(activity);
         viewAddNewTask = activity.getLayoutInflater().inflate(R.layout.widget_modal_new_task, null);
         txtNameNewTask = viewAddNewTask.findViewById(R.id.txt_name_new_task);
 
@@ -74,7 +77,8 @@ public class WidgetCreateNewTask {
         });
 
         btnCreateNewTask = viewAddNewTask.findViewById(R.id.btn_create_new_task);
-        alertDialog = alertDialogAddNewTask.setView(viewAddNewTask).create();
+        //alertDialog = alertDialogAddNewTask.setView(viewAddNewTask).create();
+        alertDialog.setContentView(viewAddNewTask);
     }
 
     private void clearModalNewTask(){
